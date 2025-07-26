@@ -4,20 +4,20 @@ import { ShoppingCart, Home, Box, Package, Shirt, BellRing, Mail } from 'lucide-
 // --- Product Data ---
 const products = [
   // Models
-  { id: 'titan-pint', name: 'Titan Pint', price: 499.99, category: 'Models', description: 'Your compact desktop AI companion for smart automations.', image: '/src/assets/TitanPint.png' },
-  { id: 'titan-power', name: 'Titan Power', price: 1299.99, category: 'Models', description: 'The mobile AI robot designed to navigate and assist throughout your home.', image: '/src/assets/TitanPower.png' },
+  { id: 'titan-pint', name: 'Titan Pint', price: 499.99, category: 'Models', description: 'Your compact desktop AI companion for smart automations.', image: '/assets/TitanPint.png' },
+  { id: 'titan-power', name: 'Titan Power', price: 1299.99, category: 'Models', description: 'The mobile AI robot designed to navigate and assist throughout your home.', image: '/assets/TitanPower.png' },
 
   // Accessories
-  { id: 'charging-dock', name: 'Rapid Charging Dock', price: 79.99, category: 'Accessories', description: 'Fast-charge station for your Titan robot.', image: '/src/assets/TitanDock.png' },
-  { id: 'privacy-shield', name: 'Privacy Shield', price: 29.99, category: 'Accessories', description: 'Physical cover for Titan\'s camera and microphone.', image: '/src/assets/TitanShield.png' },
-  { id: 'travel-case', name: 'Rugged Travel Case', price: 59.99, category: 'Accessories', description: 'Durable case for transporting your Titan Pint.', image: '/src/assets/TitanCase.png' },
-  { id: 'voice-module', name: 'Enhanced Voice Module', price: 49.99, category: 'Accessories', description: 'Upgrade Titan\'s voice recognition and output.', image: '/src/assets/TitanVoice.png' },
+  { id: 'charging-dock', name: 'Rapid Charging Dock', price: 79.99, category: 'Accessories', description: 'Fast-charge station for your Titan robot.', image: '/assets/TitanDock.png' },
+  { id: 'privacy-shield', name: 'Privacy Shield', price: 29.99, category: 'Accessories', description: 'Physical cover for Titan\'s camera and microphone.', image: '/assets/TitanShield.png' },
+  { id: 'travel-case', name: 'Rugged Travel Case', price: 59.99, category: 'Accessories', description: 'Durable case for transporting your Titan Pint.', image: '/assets/TitanCase.png' },
+  { id: 'voice-module', name: 'Enhanced Voice Module', price: 49.99, category: 'Accessories', description: 'Upgrade Titan\'s voice recognition and output.', image: '/assets/TitanVoice.png' },
 
   // Modules (Subscription)
-  { id: 'home-security-module', name: 'Home Security Module', price: 9.99, category: 'Modules', description: '24/7 monitoring and alerts (monthly subscription).', subscription: true, image: '/src/assets/ModuleSecurity.png' },
-  { id: 'smart-learning-module', name: 'Smart Learning Module', price: 14.99, category: 'Modules', description: 'Advanced AI learning capabilities (monthly subscription).', subscription: true, image: '/src/assets/ModuleLearning.png' },
-  { id: 'wellness-assistant-module', name: 'Wellness Assistant Module', price: 12.99, category: 'Modules', description: 'Personalized health and wellness coaching (monthly subscription).', subscription: true, image: '/src/assets/ModuleWellness.png' },
-  { id: 'developer-api-module', name: 'Developer API Module', price: 19.99, category: 'Modules', description: 'Access to Titan\'s API for custom integrations (monthly subscription).', subscription: true, image: '/src/assets/ModuleDeveloper.png' },
+  { id: 'home-security-module', name: 'Home Security Module', price: 9.99, category: 'Modules', description: '24/7 monitoring and alerts (monthly subscription).', subscription: true, image: '/assets/ModuleSecurity.png' },
+  { id: 'smart-learning-module', name: 'Smart Learning Module', price: 14.99, category: 'Modules', description: 'Advanced AI learning capabilities (monthly subscription).', subscription: true, image: '/assets/ModuleLearning.png' },
+  { id: 'wellness-assistant-module', name: 'Wellness Assistant Module', price: 12.99, category: 'Modules', description: 'Personalized health and wellness coaching (monthly subscription).', subscription: true, image: '/assets/ModuleWellness.png' },
+  { id: 'developer-api-module', name: 'Developer API Module', price: 19.99, category: 'Modules', description: 'Access to Titan\'s API for custom integrations (monthly subscription).', subscription: true, image: '/assets/ModuleDeveloper.png' },
 
   // Apparel
   { 
@@ -26,7 +26,7 @@ const products = [
     price: 24.99, 
     category: 'Apparel', 
     description: 'Show your love for Titan Pint with this comfortable tee.', 
-    image: '/src/assets/TitanTshirt.png',
+    image: '/assets/TitanTshirt.png',
     hasSizes: true,
     sizes: [
       { id: 'SM', name: 'Tiny (SM)', price: 24.99 },
@@ -40,7 +40,7 @@ const products = [
     price: 49.99, 
     category: 'Apparel', 
     description: 'Stay warm and stylish with the Titan Pint hoodie.', 
-    image: '/src/assets/TitanHoodie.png',
+    image: '/assets/TitanHoodie.png',
     hasSizes: true,
     sizes: [
       { id: 'SM', name: 'Tiny (SM)', price: 49.99 },
@@ -54,7 +54,7 @@ const products = [
     price: 19.99, 
     category: 'Apparel', 
     description: 'Sport the Titan Power logo with this adjustable cap.', 
-    image: '/src/assets/TitanCap.png',
+    image: '/assets/TitanCap.png',
     hasSizes: true,
     sizes: [
       { id: 'ADJUSTABLE', name: 'Adjustable', price: 19.99 },
@@ -67,7 +67,7 @@ const products = [
     price: 79.99, 
     category: 'Apparel', 
     description: 'Premium jacket for the dedicated Titan Power enthusiast.', 
-    image: '/src/assets/TitanJacket.png',
+    image: '/assets/TitanJacket.png',
     hasSizes: true,
     sizes: [
       { id: 'SM', name: 'Tiny (SM)', price: 79.99 },
@@ -222,13 +222,13 @@ const HomePage = ({ navigateTo }) => {
         </div>
         <div className="md:w-1/2 flex justify-center gap-6">
           <img
-            src="/src/assets/TitanPower.png"
+            src="/assets/TitanPower.png"
             alt="Titan the AI Robot"
             className="rounded-2xl shadow-2xl max-w-full h-auto"
             onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/500x400/D1E9FF/000?text=Titan+Robot'; }}
           />
           <video
-            src="/src/assets/TitanVideo.mp4"
+            src="/assets/TitanVideo.mp4"
             className="rounded-2xl shadow-2xl max-w-full h-auto"
             autoPlay
             muted
@@ -805,7 +805,7 @@ const SignupForm = ({ navigateTo }) => {
           </div>
           <div className="lg:w-1/2 flex justify-center">
             <img
-              src="/src/assets/TitanOffer.png"
+              src="/assets/TitanOffer.png"
               alt="Titan Robot Special Offer"
               className="rounded-2xl shadow-2xl max-w-full h-auto"
               onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/500x400/D1E9FF/000?text=Titan+Offer'; }}
