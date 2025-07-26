@@ -25,7 +25,7 @@ git --version   # Any recent version
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/segment-modern-ecommerce.git
+git clone https://github.com/islegendary/segment-modern-ecommerce.git
 cd segment-modern-ecommerce
 
 # Install dependencies

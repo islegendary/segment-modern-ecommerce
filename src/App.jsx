@@ -20,10 +20,61 @@ const products = [
   { id: 'developer-api-module', name: 'Developer API Module', price: 19.99, category: 'Modules', description: 'Access to Titan\'s API for custom integrations (monthly subscription).', subscription: true, image: '/src/assets/ModuleDeveloper.png' },
 
   // Apparel
-  { id: 'pint-tshirt', name: 'Titan Pint T-Shirt', price: 24.99, category: 'Apparel', description: 'Show your love for Titan Pint with this comfortable tee.', image: '/src/assets/TitanTshirt.png' },
-  { id: 'pint-hoodie', name: 'Titan Pint Hoodie', price: 49.99, category: 'Apparel', description: 'Stay warm and stylish with the Titan Pint hoodie.', image: '/src/assets/TitanHoodie.png' },
-  { id: 'power-cap', name: 'Titan Power Cap', price: 19.99, category: 'Apparel', description: 'Sport the Titan Power logo with this adjustable cap.', image: '/src/assets/TitanCap.png' },
-  { id: 'power-jacket', name: 'Titan Power Jacket', price: 79.99, category: 'Apparel', description: 'Premium jacket for the dedicated Titan Power enthusiast.', image: '/src/assets/TitanJacket.png' },
+  { 
+    id: 'pint-tshirt', 
+    name: 'Titan Pint T-Shirt', 
+    price: 24.99, 
+    category: 'Apparel', 
+    description: 'Show your love for Titan Pint with this comfortable tee.', 
+    image: '/src/assets/TitanTshirt.png',
+    hasSizes: true,
+    sizes: [
+      { id: 'SM', name: 'Tiny (SM)', price: 24.99 },
+      { id: 'LG', name: 'Boom (LG)', price: 24.99 },
+      { id: 'XL', name: 'Power (XL)', price: 24.99 }
+    ]
+  },
+  { 
+    id: 'pint-hoodie', 
+    name: 'Titan Pint Hoodie', 
+    price: 49.99, 
+    category: 'Apparel', 
+    description: 'Stay warm and stylish with the Titan Pint hoodie.', 
+    image: '/src/assets/TitanHoodie.png',
+    hasSizes: true,
+    sizes: [
+      { id: 'SM', name: 'Tiny (SM)', price: 49.99 },
+      { id: 'LG', name: 'Boom (LG)', price: 49.99 },
+      { id: 'XL', name: 'Power (XL)', price: 49.99 }
+    ]
+  },
+  { 
+    id: 'power-cap', 
+    name: 'Titan Power Cap', 
+    price: 19.99, 
+    category: 'Apparel', 
+    description: 'Sport the Titan Power logo with this adjustable cap.', 
+    image: '/src/assets/TitanCap.png',
+    hasSizes: true,
+    sizes: [
+      { id: 'ADJUSTABLE', name: 'Adjustable', price: 19.99 },
+      { id: 'NEURALINK', name: 'Neuralink (become 1 with Titan)', price: 9999.00 }
+    ]
+  },
+  { 
+    id: 'power-jacket', 
+    name: 'Titan Power Jacket', 
+    price: 79.99, 
+    category: 'Apparel', 
+    description: 'Premium jacket for the dedicated Titan Power enthusiast.', 
+    image: '/src/assets/TitanJacket.png',
+    hasSizes: true,
+    sizes: [
+      { id: 'SM', name: 'Tiny (SM)', price: 79.99 },
+      { id: 'LG', name: 'Boom (LG)', price: 79.99 },
+      { id: 'XL', name: 'Power (XL)', price: 79.99 }
+    ]
+  },
 ];
 
 // --- Segment Analytics Integration ---
@@ -112,6 +163,12 @@ const Header = ({ navigateTo, cartItemCount }) => {
           >
             <Home size={20} /> Home
           </button>
+          <button
+            onClick={() => navigateTo('signup')}
+            className="flex items-center gap-2 px-4 py-2 rounded-full hover:bg-white hover:text-blue-600 transition-all duration-300 font-medium"
+          >
+            <Mail size={20} /> Offers
+          </button>
           <div className="relative">
             <button
               onClick={() => navigateTo('cart')}
@@ -163,13 +220,24 @@ const HomePage = ({ navigateTo }) => {
             Explore Models
           </button>
         </div>
-        <div className="md:w-1/2 flex justify-center">
+        <div className="md:w-1/2 flex justify-center gap-6">
           <img
             src="/src/assets/TitanPower.png"
             alt="Titan the AI Robot"
             className="rounded-2xl shadow-2xl max-w-full h-auto"
             onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/500x400/D1E9FF/000?text=Titan+Robot'; }}
           />
+          <video
+            src="/src/assets/TitanVideo.mp4"
+            className="rounded-2xl shadow-2xl max-w-full h-auto"
+            autoPlay
+            muted
+            playsInline
+            onEnded={(e) => { e.target.style.display = 'block'; }} // Keep visible after playing
+            style={{ maxHeight: '400px', width: 'auto' }}
+          >
+            Your browser does not support the video tag.
+          </video>
         </div>
       </section>
 
@@ -215,6 +283,21 @@ const CategoryPage = ({ categoryName, navigateTo }) => {
     trackPage('Category Page', { category: categoryName });
   }, [categoryName]);
 
+  const getPriceDisplay = (product) => {
+    if (product.hasSizes && product.sizes) {
+      const prices = product.sizes.map(size => size.price);
+      const minPrice = Math.min(...prices);
+      const maxPrice = Math.max(...prices);
+      
+      if (minPrice === maxPrice) {
+        return `$${minPrice.toFixed(2)}`;
+      } else {
+        return `$${minPrice.toFixed(2)} - $${maxPrice.toFixed(2)}`;
+      }
+    }
+    return `$${product.price.toFixed(2)}`;
+  };
+
   return (
     <div className="p-6">
       <h2 className="text-4xl font-bold text-gray-900 mb-8 text-center">{categoryName}</h2>
@@ -234,9 +317,14 @@ const CategoryPage = ({ categoryName, navigateTo }) => {
             <div className="p-6">
               <h3 className="text-2xl font-semibold text-gray-800 mb-2">{product.name}</h3>
               <p className="text-gray-600 mb-4 line-clamp-2">{product.description}</p>
-              <p className="text-blue-600 text-2xl font-bold">${product.price.toFixed(2)}</p>
+              <p className="text-blue-600 text-2xl font-bold">{getPriceDisplay(product)}</p>
               {product.subscription && (
                 <span className="text-sm text-purple-600 font-medium mt-2 block">Monthly Subscription</span>
+              )}
+              {product.hasSizes && (
+                <span className="text-sm text-green-600 font-medium mt-2 block">
+                  {product.id === 'power-cap' ? 'Available in 2 options' : 'Available in 3 sizes'}
+                </span>
               )}
             </div>
           </div>
@@ -258,6 +346,7 @@ const CategoryPage = ({ categoryName, navigateTo }) => {
 const ProductPage = ({ productId, navigateTo, addToCart }) => {
   const product = products.find(p => p.id === productId);
   const [showAddedToCartMessage, setShowAddedToCartMessage] = useState(false);
+  const [selectedSize, setSelectedSize] = useState(null);
 
   useEffect(() => {
     if (product) {
@@ -276,6 +365,11 @@ const ProductPage = ({ productId, navigateTo, addToCart }) => {
         category: product.category,
         price: product.price,
       });
+
+      // Set default size if product has sizes
+      if (product.hasSizes && product.sizes && product.sizes.length > 0) {
+        setSelectedSize(product.sizes[0]);
+      }
     }
   }, [productId, product]);
 
@@ -288,19 +382,38 @@ const ProductPage = ({ productId, navigateTo, addToCart }) => {
   }
 
   const handleAddToCart = () => {
-    addToCart(product);
+    let productToAdd = { ...product };
+    
+    // If product has sizes, include the selected size info
+    if (product.hasSizes && selectedSize) {
+      productToAdd = {
+        ...product,
+        id: `${product.id}-${selectedSize.id}`, // Unique ID for size variant
+        name: `${product.name} (${selectedSize.name})`,
+        price: selectedSize.price,
+        selectedSize: selectedSize
+      };
+    }
+
+    addToCart(productToAdd);
+    
     // Use centralized event tracking to prevent duplicates
     trackEvent('Product Added', {
-      productId: product.id,
-      productName: product.name,
+      productId: productToAdd.id,
+      productName: productToAdd.name,
       category: product.category,
-      price: product.price,
+      price: productToAdd.price,
       quantity: 1,
+      ...(selectedSize && { size: selectedSize.name })
     });
+    
     setShowAddedToCartMessage(true);
     // Optionally hide the message after a few seconds
     setTimeout(() => setShowAddedToCartMessage(false), 5000);
   };
+
+  const currentPrice = product.hasSizes && selectedSize ? selectedSize.price : product.price;
+  const canAddToCart = !product.hasSizes || selectedSize;
 
   return (
     <div className="p-6">
@@ -316,16 +429,56 @@ const ProductPage = ({ productId, navigateTo, addToCart }) => {
         <div className="md:w-1/2 text-center md:text-left">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">{product.name}</h2>
           <p className="text-gray-700 text-lg mb-6">{product.description}</p>
-          <p className="text-blue-600 text-5xl font-extrabold mb-6">${product.price.toFixed(2)}</p>
+          <p className="text-blue-600 text-5xl font-extrabold mb-6">${currentPrice.toFixed(2)}</p>
           {product.subscription && (
             <p className="text-purple-600 text-lg font-semibold mb-6">Monthly Subscription</p>
           )}
+
+          {/* Size Selection for Apparel */}
+          {product.hasSizes && product.sizes && (
+            <div className="mb-6">
+              <h3 className="text-xl font-semibold text-gray-800 mb-3">
+                {product.id === 'power-cap' ? 'Select Option:' : 'Select Size:'}
+              </h3>
+              <div className={`grid gap-3 ${product.id === 'power-cap' ? 'grid-cols-1' : 'grid-cols-3'}`}>
+                {product.sizes.map((size) => (
+                  <button
+                    key={size.id}
+                    onClick={() => setSelectedSize(size)}
+                    className={`p-3 rounded-xl border-2 transition-all duration-300 ${
+                      selectedSize?.id === size.id
+                        ? 'border-blue-600 bg-blue-50 text-blue-600'
+                        : 'border-gray-300 hover:border-blue-400 hover:bg-gray-50'
+                    } ${product.id === 'power-cap' && size.id === 'NEURALINK' ? 'bg-gradient-to-r from-purple-50 to-pink-50 border-purple-300 hover:border-purple-400' : ''}`}
+                  >
+                    <div className="font-semibold">{size.name}</div>
+                    <div className={`text-sm ${size.id === 'NEURALINK' ? 'text-purple-600 font-bold' : 'text-gray-600'}`}>
+                      ${size.price.toFixed(2)}
+                      {size.id === 'NEURALINK' && <span className="block text-xs text-purple-500 mt-1">Premium Neural Interface</span>}
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
           <button
             onClick={handleAddToCart}
-            className="bg-blue-600 text-white px-8 py-4 rounded-full text-xl font-semibold shadow-lg hover:bg-blue-700 transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-3 mx-auto md:mx-0"
+            disabled={!canAddToCart}
+            className={`px-8 py-4 rounded-full text-xl font-semibold shadow-lg transform transition-all duration-300 flex items-center justify-center gap-3 mx-auto md:mx-0 ${
+              canAddToCart
+                ? 'bg-blue-600 text-white hover:bg-blue-700 hover:scale-105'
+                : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+            }`}
           >
             <ShoppingCart size={24} /> Add to Cart
           </button>
+
+          {!canAddToCart && product.hasSizes && (
+            <p className="text-red-500 text-sm mt-2 text-center md:text-left">
+              {product.id === 'power-cap' ? 'Please select an option first' : 'Please select a size first'}
+            </p>
+          )}
 
           {showAddedToCartMessage && (
             <div className="mt-6 p-5 bg-green-100 text-green-800 rounded-xl shadow-lg border border-green-200">
@@ -574,7 +727,7 @@ const SignupForm = ({ navigateTo }) => {
     
     const signUpProperties = {
       source: 'Signup Form',
-      ...traits // Include email/phone in the event properties
+      ...traits // Include email/phone in the event properties or remove and just use traits in context
     };
     
     // Use centralized event tracking to prevent duplicates
@@ -597,56 +750,68 @@ const SignupForm = ({ navigateTo }) => {
 
   return (
     <div className="p-6">
-      <div className="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-3xl shadow-xl p-8 md:p-12 w-full mx-auto text-center">
-        <h2 className="text-4xl font-bold text-gray-900 mb-6">Sign Up for Exclusive Offers</h2>
-        <p className="text-lg text-gray-700 mb-8">
+      <div className="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-3xl shadow-xl p-8 md:p-12 w-full mx-auto">
+        <h2 className="text-4xl font-bold text-gray-900 mb-6 text-center">Sign Up for Exclusive Offers</h2>
+        <p className="text-lg text-gray-700 mb-8 text-center">
           Get the latest news, updates, and special discounts on Titan robots and accessories delivered straight to your inbox or phone!
         </p>
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label htmlFor="email" className="block text-left text-gray-700 text-lg font-medium mb-2">Email Address</label>
-            <div className="relative">
-              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-              <input
-                type="email"
-                id="email"
-                className="w-full p-3 pl-10 border border-gray-300 rounded-xl focus:ring-blue-500 focus:border-blue-500 text-lg"
-                placeholder="your.email@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
+        <div className="flex flex-col lg:flex-row items-center gap-8">
+          <div className="lg:w-1/2">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <label htmlFor="email" className="block text-left text-gray-700 text-lg font-medium mb-2">Email Address</label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+                  <input
+                    type="email"
+                    id="email"
+                    className="w-full p-3 pl-10 border border-gray-300 rounded-xl focus:ring-blue-500 focus:border-blue-500 text-lg"
+                    placeholder="your.email@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div>
+                <label htmlFor="phone" className="block text-left text-gray-700 text-lg font-medium mb-2">Phone Number (for SMS)</label>
+                <div className="relative">
+                  <BellRing className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+                  <input
+                    type="tel"
+                    id="phone"
+                    className="w-full p-3 pl-10 border border-gray-300 rounded-xl focus:ring-blue-500 focus:border-blue-500 text-lg"
+                    placeholder="(123) 456-7890"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                  />
+                </div>
+              </div>
+              <button
+                type="submit"
+                className="w-full bg-blue-600 text-white px-6 py-3 rounded-full text-xl font-semibold shadow-lg hover:bg-blue-700 transform hover:scale-105 transition-all duration-300"
+              >
+                Subscribe
+              </button>
+            </form>
+            {message && (
+              <p className="mt-6 text-green-700 font-semibold text-lg">{message}</p>
+            )}
+            <button
+              onClick={() => navigateTo('home')}
+              className="mt-8 bg-gray-200 text-gray-800 px-6 py-3 rounded-full text-lg font-medium hover:bg-gray-300 transition-colors duration-300"
+            >
+              Back to Home
+            </button>
           </div>
-          <div>
-            <label htmlFor="phone" className="block text-left text-gray-700 text-lg font-medium mb-2">Phone Number (for SMS)</label>
-            <div className="relative">
-              <BellRing className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-              <input
-                type="tel"
-                id="phone"
-                className="w-full p-3 pl-10 border border-gray-300 rounded-xl focus:ring-blue-500 focus:border-blue-500 text-lg"
-                placeholder="(123) 456-7890"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-              />
-            </div>
+          <div className="lg:w-1/2 flex justify-center">
+            <img
+              src="/src/assets/TitanOffer.png"
+              alt="Titan Robot Special Offer"
+              className="rounded-2xl shadow-2xl max-w-full h-auto"
+              onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/500x400/D1E9FF/000?text=Titan+Offer'; }}
+            />
           </div>
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white px-6 py-3 rounded-full text-xl font-semibold shadow-lg hover:bg-blue-700 transform hover:scale-105 transition-all duration-300"
-          >
-            Subscribe
-          </button>
-        </form>
-        {message && (
-          <p className="mt-6 text-green-700 font-semibold text-lg">{message}</p>
-        )}
-        <button
-          onClick={() => navigateTo('home')}
-          className="mt-8 bg-gray-200 text-gray-800 px-6 py-3 rounded-full text-lg font-medium hover:bg-gray-300 transition-colors duration-300"
-        >
-          Back to Home
-        </button>
+        </div>
       </div>
     </div>
   );
@@ -781,7 +946,7 @@ const App = () => {
         <div className="container mx-auto">
           <p>&copy; {new Date().getFullYear()} Titan AI Robotics. All rights reserved.</p>
           <p className="text-sm mt-2">
-            This is a demo site for Segment integration. All Segment calls are logged to the console.
+            This is a demo site includes Segment.io integration. All Segment calls are logged to the console.
           </p>
         </div>
       </footer>
