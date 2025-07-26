@@ -112,6 +112,12 @@ const Header = ({ navigateTo, cartItemCount }) => {
           >
             <Home size={20} /> Home
           </button>
+          <button
+            onClick={() => navigateTo('signup')}
+            className="flex items-center gap-2 px-4 py-2 rounded-full hover:bg-white hover:text-blue-600 transition-all duration-300 font-medium"
+          >
+            <Mail size={20} /> Offers
+          </button>
           <div className="relative">
             <button
               onClick={() => navigateTo('cart')}
