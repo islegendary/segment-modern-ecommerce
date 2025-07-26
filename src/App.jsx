@@ -220,24 +220,28 @@ const HomePage = ({ navigateTo }) => {
             Explore Models
           </button>
         </div>
-        <div className="md:w-1/2 flex justify-center gap-6">
-          <img
-            src="/assets/TitanPower.png"
-            alt="Titan the AI Robot"
-            className="rounded-2xl shadow-2xl max-w-full h-auto"
-            onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/500x400/D1E9FF/000?text=Titan+Robot'; }}
-          />
-          <video
-            src="/assets/TitanVideo.mp4"
-            className="rounded-2xl shadow-2xl max-w-full h-auto"
-            autoPlay
-            muted
-            playsInline
-            onEnded={(e) => { e.target.style.display = 'block'; }} // Keep visible after playing
-            style={{ maxHeight: '400px', width: 'auto' }}
-          >
-            Your browser does not support the video tag.
-          </video>
+        <div className="md:w-1/2 flex justify-center items-center gap-4 overflow-hidden">
+          <div className="flex-1 max-w-xs">
+            <img
+              src="/assets/TitanPower.png"
+              alt="Titan the AI Robot"
+              className="rounded-2xl shadow-2xl w-full h-auto object-cover"
+              onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/500x400/D1E9FF/000?text=Titan+Robot'; }}
+            />
+          </div>
+          <div className="flex-1 max-w-xs">
+            <video
+              src="/assets/TitanVideo.mp4"
+              className="rounded-2xl shadow-2xl w-full h-auto object-cover"
+              autoPlay
+              muted
+              playsInline
+              onEnded={(e) => { e.target.style.display = 'block'; }} // Keep visible after playing
+              style={{ maxHeight: '300px' }}
+            >
+              Your browser does not support the video tag.
+            </video>
+          </div>
         </div>
       </section>
 
