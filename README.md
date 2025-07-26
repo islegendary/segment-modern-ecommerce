@@ -29,7 +29,7 @@ A modern, responsive e-commerce platform showcasing Titan AI Robotics products w
 
 ## 🚀 Live Demo
 
-Visit the live demo: [Segment Modern E-commerce Demo](your-demo-url-here)
+Visit the live demo: [Segment Modern E-commerce Demo](coming soon)
 
 ## 🛠️ Tech Stack
 

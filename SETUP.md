@@ -52,7 +52,7 @@ npm install
 
 ```bash
 # Install Tailwind CSS and dependencies
-npm install -D tailwindcss postcss autoprefixer
+npm install -D tailwindcss@^3 postcss autoprefixer
 npx tailwindcss init -p
 ```
 
