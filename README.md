@@ -37,7 +37,14 @@ A modern, responsive e-commerce platform showcasing Titan AI Robotics products w
 
 ## 🚀 Live Demo
 
-Visit the live demo: [Segment Modern E-commerce Demo](coming soon)
+**[View Live Demo →](https://segment-modern-ecommerce.vercel.app)**
+
+Experience the full Titan AI Robotics e-commerce platform with all features including:
+- Hero video animation
+- Dynamic product sizing
+- Shopping cart functionality  
+- Segment analytics integration
+- Mobile-responsive design
 
 ## 🛠️ Tech Stack
 
@@ -59,7 +66,7 @@ Visit the live demo: [Segment Modern E-commerce Demo](coming soon)
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/segment-modern-ecommerce.git
+   git clone https://github.com/islegendary/segment-modern-ecommerce.git
    cd segment-modern-ecommerce
    ```
 
