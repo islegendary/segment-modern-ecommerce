@@ -540,63 +540,65 @@ const CartPage = ({ cart, updateCartQuantity, removeFromCart, navigateTo }) => {
         </div>
       ) : (
         <div className="w-full">
-          <div className="divide-y divide-gray-200 px-8">
+          <div className="divide-y divide-gray-200 px-4 sm:px-8">
             {cart.map(item => (
-              <div key={item.id} className="flex items-center justify-between py-6">
+              <div key={item.id} className="flex flex-col sm:flex-row sm:items-center sm:justify-between py-6 gap-4">
                 <div className="flex items-center gap-4">
                   <img
                     src={item.image}
                     alt={item.name}
-                    className="w-24 h-24 object-cover rounded-lg shadow-md"
+                    className="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-lg shadow-md"
                     onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/100x100/F0F9FF/000?text=Image'; }}
                   />
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-800">{item.name}</h3>
+                    <h3 className="text-lg sm:text-xl font-semibold text-gray-800">{item.name}</h3>
                     <p className="text-gray-600">${item.price.toFixed(2)}</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-4">
+                <div className="flex items-center justify-between sm:gap-4">
                   <div className="flex items-center border border-gray-300 rounded-lg">
                     <button
                       onClick={() => updateCartQuantity(item.id, item.quantity - 1)}
-                      className="px-3 py-1 text-lg font-bold text-gray-700 hover:bg-gray-100 rounded-l-lg"
+                      className="px-2 sm:px-3 py-1 text-base sm:text-lg font-bold text-gray-700 hover:bg-gray-100 rounded-l-lg"
                       disabled={item.quantity <= 1}
                     >
                       -
                     </button>
-                    <span className="px-4 py-1 text-lg font-medium">{item.quantity}</span>
+                    <span className="px-3 sm:px-4 py-1 text-base sm:text-lg font-medium">{item.quantity}</span>
                     <button
                       onClick={() => updateCartQuantity(item.id, item.quantity + 1)}
-                      className="px-3 py-1 text-lg font-bold text-gray-700 hover:bg-gray-100 rounded-r-lg"
+                      className="px-2 sm:px-3 py-1 text-base sm:text-lg font-bold text-gray-700 hover:bg-gray-100 rounded-r-lg"
                     >
                       +
                     </button>
                   </div>
-                  <p className="text-lg font-bold text-gray-800 w-24 text-right">${(item.price * item.quantity).toFixed(2)}</p>
-                  <button
-                    onClick={() => {
-                      removeFromCart(item.id);
-                      // Use centralized event tracking to prevent duplicates
-                      trackEvent('Product Removed', {
-                        productId: item.id,
-                        productName: item.name,
-                        price: item.price,
-                        quantity: item.quantity,
-                      });
-                    }}
-                    className="bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-600 transition-colors duration-300 text-sm font-medium"
-                  >
-                    Remove
-                  </button>
+                  <div className="flex items-center gap-3 sm:gap-4">
+                    <p className="text-lg font-bold text-gray-800 min-w-fit">${(item.price * item.quantity).toFixed(2)}</p>
+                    <button
+                      onClick={() => {
+                        removeFromCart(item.id);
+                        // Use centralized event tracking to prevent duplicates
+                        trackEvent('Product Removed', {
+                          productId: item.id,
+                          productName: item.name,
+                          price: item.price,
+                          quantity: item.quantity,
+                        });
+                      }}
+                      className="bg-red-500 text-white px-3 sm:px-4 py-2 rounded-full hover:bg-red-600 transition-colors duration-300 text-xs sm:text-sm font-medium"
+                    >
+                      Remove
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}
           </div>
-          <div className="flex justify-end items-center mt-8 pt-6 border-t border-gray-200 px-8 pb-8">
-            <p className="text-3xl font-bold text-gray-900 mr-6">Total: ${total.toFixed(2)}</p>
+          <div className="flex flex-col sm:flex-row sm:justify-end sm:items-center mt-8 pt-6 border-t border-gray-200 px-4 sm:px-8 pb-8 gap-4">
+            <p className="text-2xl sm:text-3xl font-bold text-gray-900 text-center sm:mr-6">Total: ${total.toFixed(2)}</p>
             <button
               onClick={() => navigateTo('checkout')}
-              className="bg-green-600 text-white px-8 py-4 rounded-full text-xl font-semibold shadow-lg hover:bg-green-700 transform hover:scale-105 transition-all duration-300"
+              className="bg-green-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-lg sm:text-xl font-semibold shadow-lg hover:bg-green-700 transform hover:scale-105 transition-all duration-300 w-full sm:w-auto"
             >
               Proceed to Checkout
             </button>
