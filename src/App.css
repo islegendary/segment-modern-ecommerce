@@ -2,10 +2,10 @@
 /* All styles are primarily handled by Tailwind CSS */
 /* This file is kept for any custom component styles if needed */
 .flex-nav {
-  @apply display: flex;
-  @apply flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
 }
 .button-nav {
-  @apply align-items: center;
-  @apply gap: .25rem; 
+  align-items: center;
+  gap: .25rem; 
 }

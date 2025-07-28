@@ -156,7 +156,7 @@ const Header = ({ navigateTo, cartItemCount }) => {
         <h1 className="text-3xl font-bold font-inter cursor-pointer" onClick={() => navigateTo('home')}>
           Titan AI Robotics
         </h1>
-        <nav className="flex flex-nav items-center space-x-6">
+        <nav className="flex-nav items-center space-x-6">
           <button
             onClick={() => navigateTo('home')}
             className="flex button-nav px-4 py-2 rounded-full hover:bg-white hover:text-blue-600 transition-all duration-300 font-medium"
@@ -165,14 +165,14 @@ const Header = ({ navigateTo, cartItemCount }) => {
           </button>
           <button
             onClick={() => navigateTo('signup')}
-            className="flex items-center gap:.25rem px-4 py-2 rounded-full hover:bg-white hover:text-blue-600 transition-all duration-300 font-medium"
+            className="flex items-center px-4 py-2 rounded-full hover:bg-white hover:text-blue-600 transition-all duration-300 font-medium"
           >
             <Mail size={20} /> Offers
           </button>
           <div className="relative">
             <button
               onClick={() => navigateTo('cart')}
-              className="flex items-center gap:.25rem px-4 py-2 rounded-full hover:bg-white hover:text-blue-600 transition-all duration-300 font-medium"
+              className="flex items-center px-4 py-2 rounded-full hover:bg-white hover:text-blue-600 transition-all duration-300 font-medium"
             >
               <ShoppingCart size={20} /> Cart
               {cartItemCount > 0 && (
