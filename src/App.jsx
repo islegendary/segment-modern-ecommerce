@@ -156,23 +156,23 @@ const Header = ({ navigateTo, cartItemCount }) => {
         <h1 className="text-3xl font-bold font-inter cursor-pointer" onClick={() => navigateTo('home')}>
           Titan AI Robotics
         </h1>
-        <nav className="flex-nav items-center space-x-6">
+        <nav className="flex flex:wrap items-center space-x-6">
           <button
             onClick={() => navigateTo('home')}
-            className="flex items-center gap-1 px-4 py-2 rounded-full hover:bg-white hover:text-blue-600 transition-all duration-300 font-medium"
+            className="flex items-center gap:.25rem px-4 py-2 rounded-full hover:bg-white hover:text-blue-600 transition-all duration-300 font-medium"
           >
             <Home size={20} /> Home
           </button>
           <button
             onClick={() => navigateTo('signup')}
-            className="flex items-center gap-1 px-4 py-2 rounded-full hover:bg-white hover:text-blue-600 transition-all duration-300 font-medium"
+            className="flex items-center gap:.25rem px-4 py-2 rounded-full hover:bg-white hover:text-blue-600 transition-all duration-300 font-medium"
           >
             <Mail size={20} /> Offers
           </button>
           <div className="relative">
             <button
               onClick={() => navigateTo('cart')}
-              className="flex items-center gap-1 px-4 py-2 rounded-full hover:bg-white hover:text-blue-600 transition-all duration-300 font-medium"
+              className="flex items-center gap:.25rem px-4 py-2 rounded-full hover:bg-white hover:text-blue-600 transition-all duration-300 font-medium"
             >
               <ShoppingCart size={20} /> Cart
               {cartItemCount > 0 && (
@@ -223,7 +223,7 @@ const HomePage = ({ navigateTo }) => {
         <div className="md:w-1/2 flex flex-col md:flex-row justify-center items-center gap-4 md:gap-6">
           <div className="w-full md:flex-1 max-w-sm">
             <img
-              src="/assets/TitanPower.png"
+              src="/assets/TitanPint.png"
               alt="Titan the AI Robot"
               className="rounded-2xl shadow-2xl w-full h-auto"
               onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/500x400/D1E9FF/000?text=Titan+Robot'; }}
