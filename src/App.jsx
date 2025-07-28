@@ -156,25 +156,25 @@ const Header = ({ navigateTo, cartItemCount }) => {
         <h1 className="text-3xl font-bold font-inter cursor-pointer" onClick={() => navigateTo('home')}>
           Titan AI Robotics
         </h1>
-        <nav className="flex items-center space-x-6">
+        <nav className="flex items-center flex-wrap gap-2 sm:gap-4">
           <button
             onClick={() => navigateTo('home')}
-            className="flex items-center gap-2 px-4 py-2 rounded-full hover:bg-white hover:text-blue-600 transition-all duration-300 font-medium"
+            className="flex items-center gap-1 px-3 py-2 rounded-full hover:bg-white hover:text-blue-600 transition-all duration-300 font-medium text-sm sm:text-base"
           >
-            <Home size={20} /> Home
+            <Home size={18} /> <span className="hidden xs:inline">Home</span>
           </button>
           <button
             onClick={() => navigateTo('signup')}
-            className="flex items-center gap-2 px-4 py-2 rounded-full hover:bg-white hover:text-blue-600 transition-all duration-300 font-medium"
+            className="flex items-center gap-1 px-3 py-2 rounded-full hover:bg-white hover:text-blue-600 transition-all duration-300 font-medium text-sm sm:text-base"
           >
-            <Mail size={20} /> Offers
+            <Mail size={18} /> <span className="hidden xs:inline">Offers</span>
           </button>
           <div className="relative">
             <button
               onClick={() => navigateTo('cart')}
-              className="flex items-center gap-2 px-4 py-2 rounded-full hover:bg-white hover:text-blue-600 transition-all duration-300 font-medium"
+              className="flex items-center gap-1 px-3 py-2 rounded-full hover:bg-white hover:text-blue-600 transition-all duration-300 font-medium text-sm sm:text-base"
             >
-              <ShoppingCart size={20} /> Cart
+              <ShoppingCart size={18} /> <span className="hidden xs:inline">Cart</span>
               {cartItemCount > 0 && (
                 <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
                   {cartItemCount}
