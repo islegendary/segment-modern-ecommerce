@@ -159,22 +159,22 @@ const Header = ({ navigateTo, cartItemCount }) => {
         <nav className="flex items-center flex-wrap gap-2 sm:gap-4">
           <button
             onClick={() => navigateTo('home')}
-            className="flex items-center gap-1 px-3 py-2 rounded-full hover:bg-white hover:text-blue-600 transition-all duration-300 font-medium text-sm sm:text-base"
+            className="flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 rounded-full hover:bg-white hover:text-blue-600 transition-all duration-300 font-medium text-sm sm:text-base"
           >
-            <Home size={18} /> <span className="hidden xs:inline">Home</span>
+            <Home size={18} className="sm:w-5 sm:h-5" /> <span className="hidden sm:inline">Home</span>
           </button>
           <button
             onClick={() => navigateTo('signup')}
-            className="flex items-center gap-1 px-3 py-2 rounded-full hover:bg-white hover:text-blue-600 transition-all duration-300 font-medium text-sm sm:text-base"
+            className="flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 rounded-full hover:bg-white hover:text-blue-600 transition-all duration-300 font-medium text-sm sm:text-base"
           >
-            <Mail size={18} /> <span className="hidden xs:inline">Offers</span>
+            <Mail size={18} className="sm:w-5 sm:h-5" /> <span className="hidden sm:inline">Offers</span>
           </button>
           <div className="relative">
             <button
               onClick={() => navigateTo('cart')}
-              className="flex items-center gap-1 px-3 py-2 rounded-full hover:bg-white hover:text-blue-600 transition-all duration-300 font-medium text-sm sm:text-base"
+              className="flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 rounded-full hover:bg-white hover:text-blue-600 transition-all duration-300 font-medium text-sm sm:text-base"
             >
-              <ShoppingCart size={18} /> <span className="hidden xs:inline">Cart</span>
+              <ShoppingCart size={18} className="sm:w-5 sm:h-5" /> <span className="hidden sm:inline">Cart</span>
               {cartItemCount > 0 && (
                 <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
                   {cartItemCount}
