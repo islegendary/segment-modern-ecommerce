@@ -159,7 +159,7 @@ const Header = ({ navigateTo, cartItemCount }) => {
         <nav className="flex items-center space-x-6">
           <button
             onClick={() => navigateTo('home')}
-            className="flex items-center gap-2 px-4 py-2 rounded-full hover:bg-white hover:text-blue-600 transition-all duration-300 font-medium"
+            className="flex-wrap items-center gap-1 px-4 py-2 rounded-full hover:bg-white hover:text-blue-600 transition-all duration-300 font-medium"
           >
             <Home size={20} /> Home
           </button>
