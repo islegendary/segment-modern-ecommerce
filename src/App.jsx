@@ -223,7 +223,7 @@ const HomePage = ({ navigateTo }) => {
         <div className="md:w-1/2 flex flex-col md:flex-row justify-center items-center gap-4 md:gap-6">
           <div className="w-full md:flex-1 max-w-sm">
             <img
-              src="/assets/TitanPower.png"
+              src="/assets/TitanPint.png"
               alt="Titan the AI Robot"
               className="rounded-2xl shadow-2xl w-full h-auto"
               onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/500x400/D1E9FF/000?text=Titan+Robot'; }}
