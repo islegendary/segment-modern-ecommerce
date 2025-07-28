@@ -156,10 +156,10 @@ const Header = ({ navigateTo, cartItemCount }) => {
         <h1 className="text-3xl font-bold font-inter cursor-pointer" onClick={() => navigateTo('home')}>
           Titan AI Robotics
         </h1>
-        <nav className="flex flex:wrap items-center space-x-6">
+        <nav className="flex flex-wrap:wrap items-center space-x-6">
           <button
             onClick={() => navigateTo('home')}
-            className="flex items-center gap:.25rem px-4 py-2 rounded-full hover:bg-white hover:text-blue-600 transition-all duration-300 font-medium"
+            className="flex items-center gap: .25rem px-4 py-2 rounded-full hover:bg-white hover:text-blue-600 transition-all duration-300 font-medium"
           >
             <Home size={20} /> Home
           </button>
