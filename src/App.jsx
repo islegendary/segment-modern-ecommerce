@@ -6,6 +6,7 @@ const products = [
   // Models
   { id: 'titan-pint', name: 'Titan Pint', price: 499.99, category: 'Models', description: 'Your compact desktop AI companion for smart automations.', image: '/assets/TitanPint.png' },
   { id: 'titan-power', name: 'Titan Power', price: 1299.99, category: 'Models', description: 'The mobile AI robot designed to navigate and assist throughout your home.', image: '/assets/TitanPower.png' },
+  { id: 'titan-custom', name: 'Titan Custom', price: 'TBD', category: 'Models', description: 'Engineered specifically for you - our team designs and builds a bespoke AI robot tailored to your unique requirements and environment.', image: '/assets/TitanPower.png', isCustom: true },
 
   // Accessories
   { id: 'charging-dock', name: 'Rapid Charging Dock', price: 79.99, category: 'Accessories', description: 'Fast-charge station for your Titan robot.', image: '/assets/TitanDock.png' },
@@ -125,7 +126,7 @@ const initializeSegment = () => {
     console.log("Segment snippet already injected.");
     return;
   }
-  const writeKey = "<YOUR_SEGMENT_WRITE_KEY>"; // Replace with your actual Segment write key
+  const writeKey = "8scJgl3fX5B7ENIIOu7mVNKDt3D6iPDM"; // Replace with your actual Segment write key
   // Define the Segment snippet as a string, WITHOUT the initial analytics.page() call
   const segmentSnippet = `
     !function(){var i="analytics",analytics=window[i]=window[i]||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","debug","page","screen","once","off","on","addSourceMiddleware","addIntegrationMiddleware","setAnonymousId","addDestinationMiddleware","register"];analytics.factory=function(e){return function(){if(window[i].initialized)return window[i][e].apply(window[i],arguments);var n=Array.prototype.slice.call(arguments);if(["track","screen","alias","group","page","identify"].indexOf(e)>-1){var c=document.querySelector("link[rel='canonical']");n.push({__t:"bpc",c:c&&c.getAttribute("href")||void 0,p:location.pathname,u:location.href,s:location.search,t:document.title,r:document.referrer})}n.unshift(e);analytics.push(n);return analytics}};for(var n=0;n<analytics.methods.length;n++){var key=analytics.methods[n];analytics[key]=analytics.factory(key)}analytics.load=function(key,n){var t=document.createElement("script");t.type="text/javascript";t.async=!0;t.setAttribute("data-global-segment-analytics-key",i);t.src="https://cdn.segment.com/analytics.js/v1/" + key + "/analytics.min.js";var r=document.getElementsByTagName("script")[0];r.parentNode.insertBefore(t,r);analytics._loadOptions=n};analytics._writeKey="${writeKey}";analytics.SNIPPET_VERSION="5.2.0";
@@ -288,6 +289,9 @@ const CategoryPage = ({ categoryName, navigateTo }) => {
   }, [categoryName]);
 
   const getPriceDisplay = (product) => {
+    if (product.isCustom) {
+      return 'TBD';
+    }
     if (product.hasSizes && product.sizes) {
       const prices = product.sizes.map(size => size.price);
       const minPrice = Math.min(...prices);
@@ -433,7 +437,11 @@ const ProductPage = ({ productId, navigateTo, addToCart }) => {
         <div className="md:w-1/2 text-center md:text-left">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">{product.name}</h2>
           <p className="text-gray-700 text-lg mb-6">{product.description}</p>
-          <p className="text-blue-600 text-5xl font-extrabold mb-6">${currentPrice.toFixed(2)}</p>
+          {product.isCustom ? (
+            <p className="text-blue-600 text-5xl font-extrabold mb-6">TBD</p>
+          ) : (
+            <p className="text-blue-600 text-5xl font-extrabold mb-6">${currentPrice.toFixed(2)}</p>
+          )}
           {product.subscription && (
             <p className="text-purple-600 text-lg font-semibold mb-6">Monthly Subscription</p>
           )}
@@ -466,25 +474,34 @@ const ProductPage = ({ productId, navigateTo, addToCart }) => {
             </div>
           )}
 
-          <button
-            onClick={handleAddToCart}
-            disabled={!canAddToCart}
-            className={`px-8 py-4 rounded-full text-xl font-semibold shadow-lg transform transition-all duration-300 flex items-center justify-center gap-3 mx-auto md:mx-0 ${
-              canAddToCart
-                ? 'bg-blue-600 text-white hover:bg-blue-700 hover:scale-105'
-                : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-            }`}
-          >
-            <ShoppingCart size={24} /> Add to Cart
-          </button>
+          {product.isCustom ? (
+            <button
+              onClick={() => navigateTo('customForm')}
+              className="px-8 py-4 rounded-full text-xl font-semibold shadow-lg transform transition-all duration-300 flex items-center justify-center gap-3 mx-auto md:mx-0 bg-purple-600 text-white hover:bg-purple-700 hover:scale-105"
+            >
+              <Box size={24} /> Configure Custom Robot
+            </button>
+          ) : (
+            <button
+              onClick={handleAddToCart}
+              disabled={!canAddToCart}
+              className={`px-8 py-4 rounded-full text-xl font-semibold shadow-lg transform transition-all duration-300 flex items-center justify-center gap-3 mx-auto md:mx-0 ${
+                canAddToCart
+                  ? 'bg-blue-600 text-white hover:bg-blue-700 hover:scale-105'
+                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+              }`}
+            >
+              <ShoppingCart size={24} /> Add to Cart
+            </button>
+          )}
 
-          {!canAddToCart && product.hasSizes && (
+          {!canAddToCart && product.hasSizes && !product.isCustom && (
             <p className="text-red-500 text-sm mt-2 text-center md:text-left">
               {product.id === 'power-cap' ? 'Please select an option first' : 'Please select a size first'}
             </p>
           )}
 
-          {showAddedToCartMessage && (
+          {showAddedToCartMessage && !product.isCustom && (
             <div className="mt-6 p-5 bg-green-100 text-green-800 rounded-xl shadow-lg border border-green-200">
               <p className="font-bold text-xl mb-4 text-center">Product added to cart!</p>
               <div className="flex justify-center gap-3">
@@ -823,6 +840,466 @@ const SignupForm = ({ navigateTo }) => {
   );
 };
 
+// --- Custom Robot Form Component ---
+const CustomFormPage = ({ navigateTo }) => {
+  const [formData, setFormData] = useState({
+    customization1: '',
+    customization2: '',
+    customization3: '',
+    customization4: '',
+    customization5: '',
+    timeframe: '',
+    capabilities: '',
+    referralCode: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    country: 'US',
+  });
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  useEffect(() => {
+    trackPage('Custom Robot Form');
+  }, []);
+
+  const customizationOptions = [
+    {
+      id: 'customization1',
+      label: 'AI Intelligence Level',
+      options: [
+        { text: 'Basic Voice Commands', score: 2 },
+        { text: 'Advanced Natural Language Processing', score: 4 },
+        { text: 'Machine Learning Capabilities', score: 6 },
+        { text: 'Full Autonomous Decision Making', score: 8 },
+        { text: 'Experimental Neural Network Integration', score: 10 }
+      ]
+    },
+    {
+      id: 'customization2', 
+      label: 'Mobility & Navigation',
+      options: [
+        { text: 'Stationary Desktop Unit', score: 2 },
+        { text: 'Basic Wheeled Movement', score: 4 },
+        { text: 'Advanced Room Navigation', score: 6 },
+        { text: 'Multi-Floor Stair Climbing', score: 8 },
+        { text: 'Outdoor Terrain Traversal', score: 10 }
+      ]
+    },
+    {
+      id: 'customization3',
+      label: 'Interaction Capabilities',
+      options: [
+        { text: 'Simple LED Display', score: 2 },
+        { text: 'Touch Screen Interface', score: 4 },
+        { text: 'Gesture Recognition', score: 6 },
+        { text: 'Facial Recognition & Emotion Detection', score: 8 },
+        { text: 'Holographic Projection Display', score: 10 }
+      ]
+    },
+    {
+      id: 'customization4',
+      label: 'Physical Manipulation',
+      options: [
+        { text: 'No Physical Interaction', score: 2 },
+        { text: 'Basic Single Arm', score: 4 },
+        { text: 'Dual Arm Coordination', score: 6 },
+        { text: 'Precision Tool Manipulation', score: 8 },
+        { text: 'Advanced Dexterous Multi-Tool System', score: 10 }
+      ]
+    },
+    {
+      id: 'customization5',
+      label: 'Specialized Functions',
+      options: [
+        { text: 'Home Security Monitoring', score: 2 },
+        { text: 'Personal Health Assistant', score: 4 },
+        { text: 'Educational Tutor & Learning Companion', score: 6 },
+        { text: 'Professional Workshop Assistant', score: 8 },
+        { text: 'Research & Development Partner', score: 10 }
+      ]
+    }
+  ];
+
+  const timeframeOptions = [
+    { text: 'Ready Today', score: 10 },
+    { text: 'Within 2 weeks', score: 8 },
+    { text: 'Within 1 Month', score: 6 }, 
+    { text: 'Within 1 Year', score: 2 }
+  ];
+
+  const handleInputChange = (field, value) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    
+    // Calculate scores for each customization option
+    const getOptionScore = (optionId, selectedText) => {
+      const optionGroup = customizationOptions.find(opt => opt.id === optionId);
+      if (optionGroup) {
+        const selectedOption = optionGroup.options.find(opt => opt.text === selectedText);
+        return selectedOption ? selectedOption.score : 0;
+      }
+      return 0;
+    };
+
+    const getTimeframeScore = (selectedTimeframe) => {
+      const timeframe = timeframeOptions.find(tf => tf.text === selectedTimeframe);
+      return timeframe ? timeframe.score : 0;
+    };
+
+    // Calculate individual scores
+    const scores = {
+      aiLevel: getOptionScore('customization1', formData.customization1),
+      mobility: getOptionScore('customization2', formData.customization2),
+      interaction: getOptionScore('customization3', formData.customization3),
+      manipulation: getOptionScore('customization4', formData.customization4),
+      specialization: getOptionScore('customization5', formData.customization5),
+      timeframe: getTimeframeScore(formData.timeframe)
+    };
+
+    // Calculate total complexity score
+    const totalComplexityScore = Object.values(scores).reduce((sum, score) => sum + score, 0);
+    
+    // Track form submission
+    trackEvent('Form Submitted', {
+      formType: 'Custom Robot Configuration',
+      customizations: {
+        aiLevel: formData.customization1,
+        mobility: formData.customization2,
+        interaction: formData.customization3,
+        manipulation: formData.customization4,
+        specialization: formData.customization5,
+      },
+      // Internal scoring (not visible to customer)
+      complexityScores: scores,
+      totalComplexityScore: totalComplexityScore,
+      complexityLevel: totalComplexityScore >= 40 ? 'Very High' : 
+                      totalComplexityScore >= 30 ? 'High' : 
+                      totalComplexityScore >= 20 ? 'Medium' : 
+                      totalComplexityScore >= 10 ? 'Low' : 'Very Low',
+      timeframe: formData.timeframe,
+      capabilities: formData.capabilities,
+      referralCode: formData.referralCode,
+      country: formData.country,
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      email: formData.email,
+      phone: formData.phone,
+      contactMethods: {
+        email: !!formData.email,
+        phone: !!formData.phone
+      }
+    });
+
+    setIsSubmitted(true);
+  };
+
+  if (isSubmitted) {
+    return (
+      <div className="p-6">
+        <div className="bg-white rounded-3xl shadow-xl p-8 max-w-2xl mx-auto text-center">
+          <div className="mb-6">
+            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Thank You!</h2>
+            <p className="text-lg text-gray-700 mb-6">
+              Your custom robot configuration has been submitted. Our engineering team will review your requirements and contact you with a detailed proposal and timeline.
+            </p>
+            <p className="text-sm text-gray-600 mb-8">
+              We'll be in touch within 1-2 business days to discuss your custom Titan robot.
+            </p>
+            <button
+              onClick={() => navigateTo('home')}
+              className="bg-blue-600 text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg hover:bg-blue-700 transform hover:scale-105 transition-all duration-300"
+            >
+              Back to Home
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="p-6">
+      <div className="bg-white rounded-3xl shadow-xl p-8 max-w-4xl mx-auto">
+        <h2 className="text-4xl font-bold text-gray-900 mb-2 text-center">Configure Your Custom Titan Robot</h2>
+        <p className="text-lg text-gray-600 mb-8 text-center">
+          Tell us about your ideal robot companion and we'll build it specifically for you.
+        </p>
+        
+        <form onSubmit={handleSubmit} className="space-y-8">
+          {/* Customization Options */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {customizationOptions.map((option) => (
+              <div key={option.id} className="space-y-3">
+                <label className="block text-lg font-semibold text-gray-800">
+                  {option.label}
+                </label>
+                <select
+                  value={formData[option.id]}
+                  onChange={(e) => handleInputChange(option.id, e.target.value)}
+                  className="w-full p-3 border border-gray-300 rounded-xl focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
+                  style={{
+                    color: '#111827',
+                    backgroundColor: 'white',
+                    fontSize: '16px',
+                    fontWeight: '400'
+                  }}
+                  required
+                >
+                  <option value="">Select {option.label}</option>
+                  {option.options.map((opt, index) => (
+                    <option 
+                      key={index} 
+                      value={opt.text}
+                      style={{
+                        color: '#111827',
+                        backgroundColor: 'white',
+                        fontSize: '16px',
+                        padding: '8px'
+                      }}
+                    >
+                      {opt.text}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            ))}
+          </div>
+
+          {/* Timeframe */}
+          <div>
+            <label className="block text-lg font-semibold text-gray-800 mb-3">
+              When do you need this completed?
+            </label>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              {timeframeOptions.map((timeframe) => (
+                <button
+                  key={timeframe.text}
+                  type="button"
+                  onClick={() => handleInputChange('timeframe', timeframe.text)}
+                  className={`p-3 rounded-xl border-2 transition-all duration-300 ${
+                    formData.timeframe === timeframe.text
+                      ? 'border-blue-600 bg-blue-50 text-blue-600'
+                      : 'border-gray-300 hover:border-blue-400 hover:bg-gray-50'
+                  }`}
+                >
+                  {timeframe.text}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Capabilities Description */}
+          <div>
+            <label htmlFor="capabilities" className="block text-lg font-semibold text-gray-800 mb-3">
+              Describe Capabilities
+            </label>
+            <p className="text-sm text-gray-600 mb-3">
+              Providing details here helps us with an estimate
+            </p>
+            <textarea
+              id="capabilities"
+              value={formData.capabilities}
+              onChange={(e) => handleInputChange('capabilities', e.target.value)}
+              className="w-full p-3 border border-gray-300 rounded-xl focus:ring-blue-500 focus:border-blue-500 h-32 resize-vertical bg-white text-gray-900"
+              style={{
+                color: '#111827',
+                backgroundColor: 'white',
+                fontSize: '16px',
+                fontWeight: '400'
+              }}
+              placeholder="Tell us about specific tasks, environments, or capabilities you need your custom robot to handle..."
+              required
+            />
+          </div>
+
+          {/* Name Fields */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label htmlFor="firstName" className="block text-lg font-semibold text-gray-800 mb-3">
+                First Name
+              </label>
+              <input
+                type="text"
+                id="firstName"
+                value={formData.firstName}
+                onChange={(e) => handleInputChange('firstName', e.target.value)}
+                className="w-full p-3 border border-gray-300 rounded-xl focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
+                style={{
+                  color: '#111827',
+                  backgroundColor: 'white',
+                  fontSize: '16px',
+                  fontWeight: '400'
+                }}
+                placeholder="John"
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="lastName" className="block text-lg font-semibold text-gray-800 mb-3">
+                Last Name
+              </label>
+              <input
+                type="text"
+                id="lastName"
+                value={formData.lastName}
+                onChange={(e) => handleInputChange('lastName', e.target.value)}
+                className="w-full p-3 border border-gray-300 rounded-xl focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
+                style={{
+                  color: '#111827',
+                  backgroundColor: 'white',
+                  fontSize: '16px',
+                  fontWeight: '400'
+                }}
+                placeholder="Smith"
+                required
+              />
+            </div>
+          </div>
+
+          {/* Contact Information */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label htmlFor="email" className="block text-lg font-semibold text-gray-800 mb-3">
+                Email Address
+              </label>
+              <input
+                type="email"
+                id="email"
+                value={formData.email}
+                onChange={(e) => handleInputChange('email', e.target.value)}
+                className="w-full p-3 border border-gray-300 rounded-xl focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
+                style={{
+                  color: '#111827',
+                  backgroundColor: 'white',
+                  fontSize: '16px',
+                  fontWeight: '400'
+                }}
+                placeholder="your.email@example.com"
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="phone" className="block text-lg font-semibold text-gray-800 mb-3">
+                Phone Number
+              </label>
+              <input
+                type="tel"
+                id="phone"
+                value={formData.phone}
+                onChange={(e) => handleInputChange('phone', e.target.value)}
+                className="w-full p-3 border border-gray-300 rounded-xl focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
+                style={{
+                  color: '#111827',
+                  backgroundColor: 'white',
+                  fontSize: '16px',
+                  fontWeight: '400'
+                }}
+                placeholder="(123) 456-7890"
+                required
+              />
+            </div>
+          </div>
+
+          {/* Country and Referral Code */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label htmlFor="country" className="block text-lg font-semibold text-gray-800 mb-3">
+                Country
+              </label>
+              <select
+                id="country"
+                value={formData.country}
+                onChange={(e) => handleInputChange('country', e.target.value)}
+                className="w-full p-3 border border-gray-300 rounded-xl focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
+                style={{
+                  color: '#111827',
+                  backgroundColor: 'white',
+                  fontSize: '16px',
+                  fontWeight: '400'
+                }}
+                required
+              >
+                <option 
+                  value="US"
+                  style={{
+                    color: '#111827',
+                    backgroundColor: 'white',
+                    fontSize: '16px',
+                    padding: '8px'
+                  }}
+                >
+                  United States
+                </option>
+                <option 
+                  value="OTHER"
+                  style={{
+                    color: '#111827',
+                    backgroundColor: 'white',
+                    fontSize: '16px',
+                    padding: '8px'
+                  }}
+                >
+                  Other Country
+                </option>
+              </select>
+            </div>
+            <div>
+              <label htmlFor="referralCode" className="block text-lg font-semibold text-gray-800 mb-3">
+                Referral Code
+              </label>
+              <input
+                type="text"
+                id="referralCode"
+                value={formData.referralCode}
+                onChange={(e) => handleInputChange('referralCode', e.target.value)}
+                className="w-full p-3 border border-gray-300 rounded-xl focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
+                style={{
+                  color: '#111827',
+                  backgroundColor: 'white',
+                  fontSize: '16px',
+                  fontWeight: '400'
+                }}
+                placeholder="Optional referral code"
+              />
+            </div>
+          </div>
+
+          {/* Submit Button */}
+          <div className="text-center pt-6">
+            <button
+              type="submit"
+              className="bg-purple-600 text-white px-12 py-4 rounded-full text-xl font-semibold shadow-lg hover:bg-purple-700 transform hover:scale-105 transition-all duration-300"
+            >
+              Submit Custom Robot Request
+            </button>
+          </div>
+        </form>
+
+        <div className="mt-8 text-center">
+          <button
+            onClick={() => navigateTo('category', 'Models')}
+            className="bg-gray-200 text-gray-800 px-6 py-3 rounded-full text-lg font-medium hover:bg-gray-300 transition-colors duration-300"
+          >
+            Back to Models
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 
 // --- Main App Component ---
 const App = () => {
@@ -924,6 +1401,8 @@ const App = () => {
         return <OrderConfirmationPage navigateTo={navigateTo} clearCart={clearCart} />;
       case 'signup':
         return <SignupForm navigateTo={navigateTo} />;
+      case 'customForm':
+        return <CustomFormPage navigateTo={navigateTo} />;
       default:
         return <HomePage navigateTo={navigateTo} />;
     }
@@ -941,6 +1420,41 @@ const App = () => {
           }
           * {
             box-sizing: border-box;
+          }
+          /* Custom select styling to ensure visibility */
+          select {
+            color: #111827 !important;
+            background-color: white !important;
+            font-size: 16px !important;
+            font-weight: 400 !important;
+          }
+          select option {
+            color: #111827 !important;
+            background-color: white !important;
+            font-size: 16px !important;
+            padding: 8px !important;
+            font-weight: 400 !important;
+          }
+          select:focus {
+            outline: none;
+            border-color: #3b82f6 !important;
+          }
+          /* Custom input and textarea styling to ensure visibility */
+          input[type="text"], input[type="email"], input[type="tel"], textarea {
+            color: #111827 !important;
+            background-color: white !important;
+            font-size: 16px !important;
+            font-weight: 400 !important;
+          }
+          input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus, textarea:focus {
+            outline: none;
+            border-color: #3b82f6 !important;
+            color: #111827 !important;
+            background-color: white !important;
+          }
+          input[type="text"]::placeholder, input[type="email"]::placeholder, input[type="tel"]::placeholder, textarea::placeholder {
+            color: #9ca3af !important;
+            opacity: 1 !important;
           }
         `}
       </style>
