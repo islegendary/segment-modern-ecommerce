@@ -6,7 +6,7 @@ const products = [
   // Models
   { id: 'titan-pint', name: 'Titan Pint', price: 499.99, category: 'Models', description: 'Your compact desktop AI companion for smart automations.', image: '/assets/TitanPint.png' },
   { id: 'titan-power', name: 'Titan Power', price: 1299.99, category: 'Models', description: 'The mobile AI robot designed to navigate and assist throughout your home.', image: '/assets/TitanPower.png' },
-  { id: 'titan-custom', name: 'Titan Custom', price: 'TBD', category: 'Models', description: 'Engineered specifically for you - our team designs and builds a bespoke AI robot tailored to your unique requirements and environment.', image: '/assets/TitanCustom.mp4', isCustom: true },
+  { id: 'titan-custom', name: 'Titan Custom', price: 'TBD', category: 'Models', description: 'Engineered specifically for you - our team designs and builds a bespoke AI robot tailored to your unique requirements and environment.', image: '/assets/TitanCustom.png', isCustom: true },
 
   // Accessories
   { id: 'charging-dock', name: 'Rapid Charging Dock', price: 79.99, category: 'Accessories', description: 'Fast-charge station for your Titan robot.', image: '/assets/TitanDock.png' },
