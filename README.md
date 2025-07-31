@@ -84,6 +84,7 @@ Experience the full Titan AI Robotics e-commerce platform with all features incl
    ```
    http://localhost:5173
    ```
+   *Note Uncaught (in promise) Error: A listener indicated an asynchronous response errors, Failed to load resource:, and net::ERR_BLOCKED_BY_CLIENT in console can be ignored and will resolve when you add your Segment writeKey.  Without your writeKey you can view the simulated events using console.
 
 ## 🏗️ Build Commands
 
