@@ -98,7 +98,9 @@ const trackPage = (pageName, properties = {}) => {
   lastPageCall = currentCall;
   
   if (window.analytics) {
-    console.log(`Tracking page: ${pageName}`, properties);
+    console.group(`📄 Segment Page Call: ${pageName}`);
+    console.log('📊 Page Properties:', JSON.stringify(properties, null, 2));
+    console.groupEnd();
     window.analytics.page(pageName, properties);
   }
 };
@@ -115,7 +117,12 @@ const trackEvent = (eventName, properties = {}, options = {}) => {
   lastTrackCall = currentCall;
   
   if (window.analytics) {
-    console.log(`Tracking event: ${eventName}`, properties, options);
+    console.group(`🎯 Segment Track Event: ${eventName}`);
+    console.log('📊 Event Properties:', JSON.stringify(properties, null, 2));
+    if (Object.keys(options).length > 0) {
+      console.log('⚙️ Event Options:', JSON.stringify(options, null, 2));
+    }
+    console.groupEnd();
     window.analytics.track(eventName, properties, options);
   }
 };
@@ -745,6 +752,9 @@ const SignupForm = ({ navigateTo }) => {
     if (phone) traits.phone = phone;
 
     if (window.analytics) {
+      console.group(`👤 Segment Identify User: ${userId}`);
+      console.log('🏷️ User Traits:', JSON.stringify(traits, null, 2));
+      console.groupEnd();
       window.analytics.identify(userId, traits);
     }
     
@@ -1339,7 +1349,7 @@ const App = () => {
       const existingItem = prevCart.find(item => item.id === productToAdd.id);
       if (existingItem) {
         return prevCart.map(item =>
-          item.id === productToAdd
+          item.id === productToAdd.id
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
