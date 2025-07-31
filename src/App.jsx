@@ -82,14 +82,14 @@ const products = [
 // This function will dynamically inject the Segment Analytics.js snippet.
 // All calls to Segment will now use the global 'analytics' object.
 
-// Track last page call to prevent duplicates
+// Track last calls to prevent unwanted duplicates
 let lastPageCall = null;
-let lastTrackCall = null;
+let lastTrackCalls = {}; // Store per-event-type tracking
 
 const trackPage = (pageName, properties = {}) => {
   const currentCall = `${pageName}-${JSON.stringify(properties)}`;
   
-  // Prevent duplicate page calls
+  // Prevent duplicate page calls (pages should only be tracked once per unique page+properties combination)
   if (lastPageCall === currentCall) {
     console.log(`Duplicate page call prevented for: ${pageName}`);
     return;
@@ -107,14 +107,43 @@ const trackPage = (pageName, properties = {}) => {
 
 const trackEvent = (eventName, properties = {}, options = {}) => {
   const currentCall = `${eventName}-${JSON.stringify(properties)}-${JSON.stringify(options)}`;
+  const currentTime = Date.now();
   
-  // Prevent duplicate track calls
-  if (lastTrackCall === currentCall) {
-    console.log(`Duplicate track call prevented for: ${eventName}`);
-    return;
+  // Define which events should allow duplicates and their cooldown periods
+  const eventSettings = {
+    'Product Added': { allowDuplicates: true, cooldownMs: 500 }, // Allow adding same product multiple times, short cooldown for rapid clicks
+    'Product Removed': { allowDuplicates: true, cooldownMs: 500 }, // Allow removing same product multiple times
+    'Product Viewed': { allowDuplicates: false, cooldownMs: 5000 }, // Prevent viewing same product repeatedly for 5 seconds
+    'Order Completed': { allowDuplicates: false, cooldownMs: 10000 }, // Prevent duplicate orders for 10 seconds
+    'Signed Up': { allowDuplicates: false, cooldownMs: 10000 }, // Prevent duplicate signups for 10 seconds
+    'Form Submitted': { allowDuplicates: false, cooldownMs: 5000 }, // Prevent duplicate form submissions for 5 seconds
+  };
+  
+  const setting = eventSettings[eventName] || { allowDuplicates: true, cooldownMs: 1000 }; // Default: allow with 1s cooldown
+  
+  // Initialize tracking for this event type if it doesn't exist
+  if (!lastTrackCalls[eventName]) {
+    lastTrackCalls[eventName] = { lastCall: null, lastTime: null };
   }
   
-  lastTrackCall = currentCall;
+  const lastEventData = lastTrackCalls[eventName];
+  
+  // Check for rapid duplicates based on event-specific settings
+  if (lastEventData.lastCall === currentCall && lastEventData.lastTime && (currentTime - lastEventData.lastTime) < setting.cooldownMs) {
+    if (!setting.allowDuplicates) {
+      console.log(`Duplicate ${eventName} prevented (cooldown: ${setting.cooldownMs}ms)`);
+      return;
+    } else {
+      console.log(`Rapid duplicate ${eventName} prevented (cooldown: ${setting.cooldownMs}ms)`);
+      return;
+    }
+  }
+  
+  // Update tracking for this event type
+  lastTrackCalls[eventName] = {
+    lastCall: currentCall,
+    lastTime: currentTime
+  };
   
   if (window.analytics) {
     console.group(`🎯 Segment Track Event: ${eventName}`);
