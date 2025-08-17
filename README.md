@@ -1,11 +1,27 @@
-# 🤖 Segment Modern E-commerce - Titan AI Robotics Demo
+<p align="center">
+  <img src="./public/assets/Banner.png" alt="Titan AI Robotics Banner" width="80%">
+</p>
 
-![Titan AI Robotics](https://img.shields.io/badge/React-19.1.0-blue)
-![Vite](https://img.shields.io/badge/Vite-7.0.6-green)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4.17-blueviolet)
-![License](https://img.shields.io/badge/license-MIT-green)
+<p align="center">
+  <em>🤖 A modern, responsive e-commerce platform showcasing Titan AI Robotics with Segment analytics</em>
+</p>
 
-A modern, responsive e-commerce platform showcasing Titan AI Robotics products with integrated analytics tracking. Built with React, Vite, and Tailwind CSS, featuring a complete shopping experience with Segment analytics integration and engaging video content.
+<p align="center">
+  <a href="#-features">Features</a> •
+  <a href="#-live-demo">Live Demo</a> •
+  <a href="#-installation">Installation</a>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/React-19.1.0-blue">
+  <img src="https://img.shields.io/badge/Vite-7.0.6-green">
+  <img src="https://img.shields.io/badge/Tailwind-3.4.17-blueviolet">
+  <img src="https://img.shields.io/badge/license-MIT-green">
+</p>
+
+---
+
+## 🎯 Built with React, Vite, and Tailwind CSS, featuring a complete shopping experience with Segment analytics integration and engaging video content.
 
 ## ✨ Features
 
@@ -280,3 +296,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
    Your application will be available at `http://localhost:5173`.
 
 For detailed setup instructions, including Segment integration, please see [SETUP.md](SETUP.md).
+
