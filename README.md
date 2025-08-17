@@ -19,7 +19,6 @@
   <img src="https://img.shields.io/badge/license-MIT-green">
 </p>
 ---
-
 ## 🎯 What is Segment Modern eCommerce?
 
 Segment Modern eCommerce is a fully featured demo storefront with Segment analytics at its core. it showcases a modern product catalog, dynamic sizing and options, smooth checkout, and integrated event tracking. The project is designed as both a reference architecture and a playground for experimenting with customer data flows, making it easy to see how Segment can drive real-time insights in an e-commerce experience.
@@ -297,6 +296,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
    Your application will be available at `http://localhost:5173`.
 
 For detailed setup instructions, including Segment integration, please see [SETUP.md](SETUP.md).
+
 
 
 
