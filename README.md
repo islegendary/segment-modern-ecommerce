@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="./public/assets/Banner.png" alt="Titan AI Robotics Banner" width="80%">
+  <img src="./public/assets/Banner.png" alt="Titan AI Robotics Banner" width="853" height="422">
 </p>
 
 <p align="center">
-  <em>🤖 A modern e-commerce platform showcasing Segment analytics</em>
+  <em>🤖 A modern e-commerce demo showcasing Segment analytics</em>
 </p>
 
 <p align="center">
@@ -297,5 +297,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
    Your application will be available at `http://localhost:5173`.
 
 For detailed setup instructions, including Segment integration, please see [SETUP.md](SETUP.md).
+
 
 
