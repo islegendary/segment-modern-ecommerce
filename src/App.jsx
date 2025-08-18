@@ -240,41 +240,41 @@ const HomePage = ({ navigateTo }) => {
   ];
 
   return (
-    <div className="p-6">
+    <div className="p-4 sm:p-6">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-3xl shadow-xl p-8 md:p-16 mb-12 flex flex-col md:flex-row items-center justify-between gap-8">
-        <div className="md:w-1/2 text-center md:text-left">
-          <h2 className="text-5xl font-extrabold text-gray-900 mb-4 leading-tight">
+      <section className="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-2xl sm:rounded-3xl shadow-xl p-4 sm:p-6 md:p-8 lg:p-16 mb-8 sm:mb-12 flex flex-col lg:flex-row items-center justify-between gap-4 sm:gap-6 md:gap-8">
+        <div className="w-full lg:w-1/2 text-center lg:text-left">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-3 sm:mb-4 leading-tight">
             Meet <span className="text-blue-600">Titan</span>, Your AI Companion
           </h2>
-          <p className="text-xl text-gray-700 mb-6">
+          <p className="text-base sm:text-lg md:text-xl text-gray-700 mb-4 sm:mb-6">
             Revolutionizing daily life with intelligent automation and seamless interaction.
           </p>
           <button
             onClick={() => navigateTo('category', 'Models')}
-            className="bg-blue-600 text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg hover:bg-blue-700 transform hover:scale-105 transition-all duration-300"
+            className="bg-blue-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-semibold shadow-lg hover:bg-blue-700 transform hover:scale-105 transition-all duration-300"
           >
             Explore Models
           </button>
         </div>
-        <div className="md:w-1/2 flex flex-col md:flex-row justify-center items-center gap-4 md:gap-6">
-          <div className="w-full md:flex-1 max-w-sm">
+        <div className="w-full lg:w-1/2 flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-4 md:gap-6">
+          <div className="w-full sm:w-1/2 max-w-xs sm:max-w-sm">
             <img
               src="/assets/TitanPint.png"
               alt="Titan the AI Robot"
-              className="rounded-2xl shadow-2xl w-full h-auto"
+              className="rounded-xl sm:rounded-2xl shadow-2xl w-full h-auto"
               onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/500x400/D1E9FF/000?text=Titan+Robot'; }}
             />
           </div>
-          <div className="w-full md:flex-1 max-w-sm">
+          <div className="w-full sm:w-1/2 max-w-xs sm:max-w-sm">
             <video
               src="/assets/TitanVideo.mp4"
-              className="rounded-2xl shadow-2xl w-full h-auto"
+              className="rounded-xl sm:rounded-2xl shadow-2xl w-full h-auto"
               autoPlay
               muted
               playsInline
               onEnded={(e) => { e.target.style.display = 'block'; }} // Keep visible after playing
-              style={{ maxHeight: '400px' }}
+              style={{ maxHeight: '300px', maxWidth: '100%' }}
             >
               Your browser does not support the video tag.
             </video>
@@ -283,30 +283,30 @@ const HomePage = ({ navigateTo }) => {
       </section>
 
       {/* Categories Section */}
-      <section className="mb-12">
-        <h3 className="text-4xl font-bold text-gray-900 text-center mb-10">Our Product Categories</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <section className="mb-8 sm:mb-12">
+        <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 text-center mb-6 sm:mb-8 md:mb-10">Our Product Categories</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
           {categories.map((category) => (
             <div
               key={category.name}
-              className="bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center text-center transform hover:scale-105 transition-all duration-300 cursor-pointer border border-gray-200 hover:border-blue-400"
+              className="bg-white rounded-xl sm:rounded-2xl shadow-lg p-4 sm:p-6 flex flex-col items-center text-center transform hover:scale-105 transition-all duration-300 cursor-pointer border border-gray-200 hover:border-blue-400"
               onClick={() => navigateTo('category', category.name)}
             >
-              <div className="text-blue-600 mb-4">{category.icon}</div>
-              <h4 className="text-2xl font-semibold text-gray-800 mb-2">{category.name}</h4>
-              <p className="text-gray-600 text-base">{category.description}</p>
+              <div className="text-blue-600 mb-3 sm:mb-4">{category.icon}</div>
+              <h4 className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-800 mb-2">{category.name}</h4>
+              <p className="text-sm sm:text-base text-gray-600">{category.description}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* Call to Action for Signup */}
-      <section className="bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-3xl p-8 md:p-12 text-center shadow-xl">
-        <h3 className="text-4xl font-bold mb-4">Stay Connected with Titan</h3>
-        <p className="text-xl mb-6">Sign up for exclusive offers and the latest news!</p>
+      <section className="bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-2xl sm:rounded-3xl p-4 sm:p-6 md:p-8 lg:p-12 text-center shadow-xl">
+        <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">Stay Connected with Titan</h3>
+        <p className="text-base sm:text-lg md:text-xl mb-4 sm:mb-6">Sign up for exclusive offers and the latest news!</p>
         <button
           onClick={() => navigateTo('signup')}
-          className="bg-white text-purple-700 px-8 py-4 rounded-full text-lg font-semibold shadow-lg hover:bg-gray-100 transform hover:scale-105 transition-all duration-300"
+          className="bg-white text-purple-700 px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-semibold shadow-lg hover:bg-gray-100 transform hover:scale-105 transition-all duration-300"
         >
           Sign Up Now!
         </button>
@@ -343,30 +343,30 @@ const CategoryPage = ({ categoryName, navigateTo }) => {
   };
 
   return (
-    <div className="p-6">
-      <h2 className="text-4xl font-bold text-gray-900 mb-8 text-center">{categoryName}</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div className="p-4 sm:p-6">
+      <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-6 sm:mb-8 text-center px-4">{categoryName}</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
         {filteredProducts.map(product => (
           <div
             key={product.id}
-            className="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300 cursor-pointer border border-gray-200 hover:border-blue-400"
+            className="bg-white rounded-xl sm:rounded-2xl shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300 cursor-pointer border border-gray-200 hover:border-blue-400"
             onClick={() => navigateTo('product', product.id)}
           >
             <img
               src={product.image}
               alt={product.name}
-              className="w-full h-64 object-cover"
+              className="w-full h-48 sm:h-56 md:h-64 object-cover"
               onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/400x300/F0F9FF/000?text=Image+Not+Found'; }}
             />
-            <div className="p-6">
-              <h3 className="text-2xl font-semibold text-gray-800 mb-2">{product.name}</h3>
-              <p className="text-gray-600 mb-4 line-clamp-2">{product.description}</p>
-              <p className="text-blue-600 text-2xl font-bold">{getPriceDisplay(product)}</p>
+            <div className="p-4 sm:p-6">
+              <h3 className="text-lg sm:text-xl md:text-2xl font-semibold text-gray-800 mb-2">{product.name}</h3>
+              <p className="text-sm sm:text-base text-gray-600 mb-3 sm:mb-4 line-clamp-2">{product.description}</p>
+              <p className="text-blue-600 text-lg sm:text-xl md:text-2xl font-bold">{getPriceDisplay(product)}</p>
               {product.subscription && (
-                <span className="text-sm text-purple-600 font-medium mt-2 block">Monthly Subscription</span>
+                <span className="text-xs sm:text-sm text-purple-600 font-medium mt-2 block">Monthly Subscription</span>
               )}
               {product.hasSizes && (
-                <span className="text-sm text-green-600 font-medium mt-2 block">
+                <span className="text-xs sm:text-sm text-green-600 font-medium mt-2 block">
                   {product.id === 'power-cap' ? 'Available in 2 options' : 'Available in 3 sizes'}
                 </span>
               )}
@@ -374,10 +374,10 @@ const CategoryPage = ({ categoryName, navigateTo }) => {
           </div>
         ))}
       </div>
-      <div className="mt-8 text-center">
+      <div className="mt-6 sm:mt-8 text-center">
         <button
           onClick={() => navigateTo('home')}
-          className="bg-gray-700 text-white px-6 py-3 rounded-full text-lg font-medium hover:bg-gray-800 transition-colors duration-300"
+          className="bg-gray-700 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-full text-base sm:text-lg font-medium hover:bg-gray-800 transition-colors duration-300"
         >
           Back to All Categories
         </button>
@@ -460,46 +460,46 @@ const ProductPage = ({ productId, navigateTo, addToCart }) => {
   const canAddToCart = !product.hasSizes || selectedSize;
 
   return (
-    <div className="p-6">
-      <div className="bg-white rounded-3xl shadow-xl p-8 flex flex-col md:flex-row items-center gap-10">
-        <div className="md:w-1/2 flex justify-center">
+    <div className="p-4 sm:p-6">
+      <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl p-4 sm:p-6 md:p-8 flex flex-col lg:flex-row items-center gap-6 sm:gap-8 md:gap-10">
+        <div className="w-full lg:w-1/2 flex justify-center">
           <img
             src={product.image}
             alt={product.name}
-            className="rounded-2xl shadow-lg max-w-full h-auto object-cover"
+            className="rounded-xl sm:rounded-2xl shadow-lg max-w-full h-auto object-cover"
             onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/600x450/F0F9FF/000?text=Image+Not+Found'; }}
           />
         </div>
-        <div className="md:w-1/2 text-center md:text-left">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">{product.name}</h2>
-          <p className="text-gray-700 text-lg mb-6">{product.description}</p>
+        <div className="w-full lg:w-1/2 text-center lg:text-left">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">{product.name}</h2>
+          <p className="text-sm sm:text-base md:text-lg text-gray-700 mb-4 sm:mb-6">{product.description}</p>
           {product.isCustom ? (
-            <p className="text-blue-600 text-5xl font-extrabold mb-6">TBD</p>
+            <p className="text-blue-600 text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 sm:mb-6">TBD</p>
           ) : (
-            <p className="text-blue-600 text-5xl font-extrabold mb-6">${currentPrice.toFixed(2)}</p>
+            <p className="text-blue-600 text-3xl sm:text-4xl md:text-5xl font-extrabold mb-4 sm:mb-6">${currentPrice.toFixed(2)}</p>
           )}
           {product.subscription && (
-            <p className="text-purple-600 text-lg font-semibold mb-6">Monthly Subscription</p>
+            <p className="text-purple-600 text-base sm:text-lg font-semibold mb-4 sm:mb-6">Monthly Subscription</p>
           )}
 
           {/* Size Selection for Apparel */}
           {product.hasSizes && product.sizes && (
-            <div className="mb-6">
-              <h3 className="text-xl font-semibold text-gray-800 mb-3">
+            <div className="mb-4 sm:mb-6">
+              <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-2 sm:mb-3">
                 {product.id === 'power-cap' ? 'Select Option:' : 'Select Size:'}
               </h3>
-              <div className={`grid gap-3 ${product.id === 'power-cap' ? 'grid-cols-1' : 'grid-cols-3'}`}>
+              <div className={`grid gap-2 sm:gap-3 ${product.id === 'power-cap' ? 'grid-cols-1' : 'grid-cols-1 sm:grid-cols-3'}`}>
                 {product.sizes.map((size) => (
                   <button
                     key={size.id}
                     onClick={() => setSelectedSize(size)}
-                    className={`p-3 rounded-xl border-2 transition-all duration-300 ${selectedSize?.id === size.id
+                    className={`p-2 sm:p-3 rounded-lg sm:rounded-xl border-2 transition-all duration-300 ${selectedSize?.id === size.id
                       ? 'border-blue-600 bg-blue-50 text-blue-600'
                       : 'border-gray-300 hover:border-blue-400 hover:bg-gray-50'
                       } ${product.id === 'power-cap' && size.id === 'NEURALINK' ? 'bg-gradient-to-r from-purple-50 to-pink-50 border-purple-300 hover:border-purple-400' : ''}`}
                   >
-                    <div className="font-semibold">{size.name}</div>
-                    <div className={`text-sm ${size.id === 'NEURALINK' ? 'text-purple-600 font-bold' : 'text-gray-600'}`}>
+                    <div className="font-semibold text-sm sm:text-base">{size.name}</div>
+                    <div className={`text-xs sm:text-sm ${size.id === 'NEURALINK' ? 'text-purple-600 font-bold' : 'text-gray-600'}`}>
                       ${size.price.toFixed(2)}
                       {size.id === 'NEURALINK' && <span className="block text-xs text-purple-500 mt-1">Premium Neural Interface</span>}
                     </div>
@@ -512,42 +512,42 @@ const ProductPage = ({ productId, navigateTo, addToCart }) => {
           {product.isCustom ? (
             <button
               onClick={() => navigateTo('customForm')}
-              className="px-8 py-4 rounded-full text-xl font-semibold shadow-lg transform transition-all duration-300 flex items-center justify-center gap-3 mx-auto md:mx-0 bg-purple-600 text-white hover:bg-purple-700 hover:scale-105"
+              className="px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg md:text-xl font-semibold shadow-lg transform transition-all duration-300 flex items-center justify-center gap-2 sm:gap-3 mx-auto lg:mx-0 bg-purple-600 text-white hover:bg-purple-700 hover:scale-105"
             >
-              <Box size={24} /> Configure Custom Robot
+              <Box size={20} className="sm:w-6 sm:h-6" /> Configure Custom Robot
             </button>
           ) : (
             <button
               onClick={handleAddToCart}
               disabled={!canAddToCart}
-              className={`px-8 py-4 rounded-full text-xl font-semibold shadow-lg transform transition-all duration-300 flex items-center justify-center gap-3 mx-auto md:mx-0 ${canAddToCart
+              className={`px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg md:text-xl font-semibold shadow-lg transform transition-all duration-300 flex items-center justify-center gap-2 sm:gap-3 mx-auto lg:mx-0 ${canAddToCart
                 ? 'bg-blue-600 text-white hover:bg-blue-700 hover:scale-105'
                 : 'bg-gray-300 text-gray-500 cursor-not-allowed'
                 }`}
             >
-              <ShoppingCart size={24} /> Add to Cart
+              <ShoppingCart size={20} className="sm:w-6 sm:h-6" /> Add to Cart
             </button>
           )}
 
           {!canAddToCart && product.hasSizes && !product.isCustom && (
-            <p className="text-red-500 text-sm mt-2 text-center md:text-left">
+            <p className="text-red-500 text-xs sm:text-sm mt-2 text-center lg:text-left">
               {product.id === 'power-cap' ? 'Please select an option first' : 'Please select a size first'}
             </p>
           )}
 
           {showAddedToCartMessage && !product.isCustom && (
-            <div className="mt-6 p-5 bg-green-100 text-green-800 rounded-xl shadow-lg border border-green-200">
-              <p className="font-bold text-xl mb-4 text-center">Product added to cart!</p>
-              <div className="flex justify-center gap-3">
+            <div className="mt-4 sm:mt-6 p-4 sm:p-5 bg-green-100 text-green-800 rounded-xl shadow-lg border border-green-200">
+              <p className="font-bold text-lg sm:text-xl mb-3 sm:mb-4 text-center">Product added to cart!</p>
+              <div className="flex flex-col sm:flex-row justify-center gap-2 sm:gap-3">
                 <button
                   onClick={() => navigateTo('cart')}
-                  className="bg-blue-600 text-white px-5 py-3 rounded-full hover:bg-blue-700 transition-colors duration-300 text-base font-semibold shadow-md"
+                  className="bg-blue-600 text-white px-4 sm:px-5 py-2 sm:py-3 rounded-full hover:bg-blue-700 transition-colors duration-300 text-sm sm:text-base font-semibold shadow-md"
                 >
                   View Cart
                 </button>
                 <button
                   onClick={() => navigateTo('category', product.category)}
-                  className="bg-gray-700 text-white px-5 py-3 rounded-full hover:bg-gray-800 transition-colors duration-300 text-base font-semibold shadow-md"
+                  className="bg-gray-700 text-white px-4 sm:px-5 py-2 sm:py-3 rounded-full hover:bg-gray-800 transition-colors duration-300 text-sm sm:text-base font-semibold shadow-md"
                 >
                   Back to {product.category}
                 </button>
@@ -557,7 +557,7 @@ const ProductPage = ({ productId, navigateTo, addToCart }) => {
 
           <button
             onClick={() => navigateTo('category', product.category)}
-            className="mt-4 bg-gray-200 text-gray-800 px-6 py-3 rounded-full text-lg font-medium hover:bg-gray-300 transition-colors duration-300 mx-auto md:mx-0 block"
+            className="mt-4 bg-gray-200 text-gray-800 px-4 sm:px-6 py-2 sm:py-3 rounded-full text-sm sm:text-base md:text-lg font-medium hover:bg-gray-300 transition-colors duration-300 mx-auto lg:mx-0 block"
           >
             Back to {product.category}
           </button>
@@ -1074,8 +1074,8 @@ const CustomFormPage = ({ navigateTo }) => {
   return (
     <div className="p-4 sm:p-6">
       <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl p-4 sm:p-6 md:p-8 max-w-4xl mx-auto">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2 text-center px-4">Configure Your Custom Titan Robot</h2>
-        <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 text-center px-4">
+        <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-2 text-center px-4">Configure Your Custom Titan Robot</h2>
+        <p className="text-sm sm:text-base md:text-lg text-gray-600 mb-6 sm:mb-8 text-center px-4">
           Tell us about your ideal robot companion and we'll build it specifically for you.
         </p>
 
@@ -1166,9 +1166,9 @@ const CustomFormPage = ({ navigateTo }) => {
           </div>
 
           {/* Name Fields */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
             <div>
-              <label htmlFor="firstName" className="block text-lg font-semibold text-gray-800 mb-3">
+              <label htmlFor="firstName" className="block text-base sm:text-lg font-semibold text-gray-800 mb-2 sm:mb-3">
                 First Name
               </label>
               <input
@@ -1176,7 +1176,7 @@ const CustomFormPage = ({ navigateTo }) => {
                 id="firstName"
                 value={formData.firstName}
                 onChange={(e) => handleInputChange('firstName', e.target.value)}
-                className="w-full p-3 border border-gray-300 rounded-xl focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
+                className="w-full p-2 sm:p-3 border border-gray-300 rounded-lg sm:rounded-xl focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
                 style={{
                   color: '#111827',
                   backgroundColor: 'white',
@@ -1188,7 +1188,7 @@ const CustomFormPage = ({ navigateTo }) => {
               />
             </div>
             <div>
-              <label htmlFor="lastName" className="block text-lg font-semibold text-gray-800 mb-3">
+              <label htmlFor="lastName" className="block text-base sm:text-lg font-semibold text-gray-800 mb-2 sm:mb-3">
                 Last Name
               </label>
               <input
@@ -1196,7 +1196,7 @@ const CustomFormPage = ({ navigateTo }) => {
                 id="lastName"
                 value={formData.lastName}
                 onChange={(e) => handleInputChange('lastName', e.target.value)}
-                className="w-full p-3 border border-gray-300 rounded-xl focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
+                className="w-full p-2 sm:p-3 border border-gray-300 rounded-lg sm:rounded-xl focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
                 style={{
                   color: '#111827',
                   backgroundColor: 'white',
@@ -1210,9 +1210,9 @@ const CustomFormPage = ({ navigateTo }) => {
           </div>
 
           {/* Contact Information */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
             <div>
-              <label htmlFor="email" className="block text-lg font-semibold text-gray-800 mb-3">
+              <label htmlFor="email" className="block text-base sm:text-lg font-semibold text-gray-800 mb-2 sm:mb-3">
                 Email Address
               </label>
               <input
@@ -1220,7 +1220,7 @@ const CustomFormPage = ({ navigateTo }) => {
                 id="email"
                 value={formData.email}
                 onChange={(e) => handleInputChange('email', e.target.value)}
-                className="w-full p-3 border border-gray-300 rounded-xl focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
+                className="w-full p-2 sm:p-3 border border-gray-300 rounded-lg sm:rounded-xl focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
                 style={{
                   color: '#111827',
                   backgroundColor: 'white',
@@ -1232,7 +1232,7 @@ const CustomFormPage = ({ navigateTo }) => {
               />
             </div>
             <div>
-              <label htmlFor="phone" className="block text-lg font-semibold text-gray-800 mb-3">
+              <label htmlFor="phone" className="block text-base sm:text-lg font-semibold text-gray-800 mb-2 sm:mb-3">
                 Phone Number
               </label>
               <input
@@ -1240,7 +1240,7 @@ const CustomFormPage = ({ navigateTo }) => {
                 id="phone"
                 value={formData.phone}
                 onChange={(e) => handleInputChange('phone', e.target.value)}
-                className="w-full p-3 border border-gray-300 rounded-xl focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
+                className="w-full p-2 sm:p-3 border border-gray-300 rounded-lg sm:rounded-xl focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
                 style={{
                   color: '#111827',
                   backgroundColor: 'white',
@@ -1254,16 +1254,16 @@ const CustomFormPage = ({ navigateTo }) => {
           </div>
 
           {/* Country and Referral Code */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
             <div>
-              <label htmlFor="country" className="block text-lg font-semibold text-gray-800 mb-3">
+              <label htmlFor="country" className="block text-base sm:text-lg font-semibold text-gray-800 mb-2 sm:mb-3">
                 Country
               </label>
               <select
                 id="country"
                 value={formData.country}
                 onChange={(e) => handleInputChange('country', e.target.value)}
-                className="w-full p-3 border border-gray-300 rounded-xl focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
+                className="w-full p-2 sm:p-3 border border-gray-300 rounded-lg sm:rounded-xl focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
                 style={{
                   color: '#111827',
                   backgroundColor: 'white',
@@ -1297,7 +1297,7 @@ const CustomFormPage = ({ navigateTo }) => {
               </select>
             </div>
             <div>
-              <label htmlFor="referralCode" className="block text-lg font-semibold text-gray-800 mb-3">
+              <label htmlFor="referralCode" className="block text-base sm:text-lg font-semibold text-gray-800 mb-2 sm:mb-3">
                 Referral Code
               </label>
               <input
@@ -1305,7 +1305,7 @@ const CustomFormPage = ({ navigateTo }) => {
                 id="referralCode"
                 value={formData.referralCode}
                 onChange={(e) => handleInputChange('referralCode', e.target.value)}
-                className="w-full p-3 border border-gray-300 rounded-xl focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
+                className="w-full p-2 sm:p-3 border border-gray-300 rounded-lg sm:rounded-xl focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900"
                 style={{
                   color: '#111827',
                   backgroundColor: 'white',
@@ -1321,17 +1321,17 @@ const CustomFormPage = ({ navigateTo }) => {
           <div className="text-center pt-6">
             <button
               type="submit"
-              className="bg-purple-600 text-white px-12 py-4 rounded-full text-xl font-semibold shadow-lg hover:bg-purple-700 transform hover:scale-105 transition-all duration-300"
+              className="bg-purple-600 text-white px-6 sm:px-8 md:px-12 py-3 sm:py-4 rounded-full text-base sm:text-lg md:text-xl font-semibold shadow-lg hover:bg-purple-700 transform hover:scale-105 transition-all duration-300"
             >
               Submit Custom Robot Request
             </button>
           </div>
         </form>
 
-        <div className="mt-8 text-center">
+        <div className="mt-6 sm:mt-8 text-center">
           <button
             onClick={() => navigateTo('category', 'Models')}
-            className="bg-gray-200 text-gray-800 px-6 py-3 rounded-full text-lg font-medium hover:bg-gray-300 transition-colors duration-300"
+            className="bg-gray-200 text-gray-800 px-4 sm:px-6 py-2 sm:py-3 rounded-full text-sm sm:text-base md:text-lg font-medium hover:bg-gray-300 transition-colors duration-300"
           >
             Back to Models
           </button>
