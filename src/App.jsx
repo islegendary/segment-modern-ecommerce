@@ -1391,9 +1391,40 @@ const App = () => {
   // Update quantity of an item in cart
   const updateCartQuantity = (productId, newQuantity) => {
     setCart(prevCart => {
+      const currentItem = prevCart.find(item => item.id === productId);
+
       if (newQuantity <= 0) {
         return prevCart.filter(item => item.id !== productId);
       }
+
+      // If quantity is being increased, track a "Product Added" event
+      if (currentItem && newQuantity > currentItem.quantity) {
+        // Use centralized event tracking to prevent duplicates
+        trackEvent('Product Added', {
+          productId: currentItem.id,
+          productName: currentItem.name,
+          category: currentItem.category || 'Unknown',
+          price: currentItem.price,
+          quantity: 1, // Track as adding 1 more item
+          source: 'Cart Quantity Update'
+        });
+      }
+
+      // If quantity is being decreased, track a "Product Removed" event
+      if (currentItem && newQuantity < currentItem.quantity) {
+        // Use centralized event tracking to prevent duplicates
+        trackEvent('Product Removed', {
+          productId: currentItem.id,
+          productName: currentItem.name,
+          category: currentItem.category || 'Unknown',
+          price: currentItem.price,
+          quantity: 1, // Track as removing 1 item
+          source: 'Cart Quantity Update',
+          previousQuantity: currentItem.quantity,
+          newQuantity: newQuantity
+        });
+      }
+
       return prevCart.map(item =>
         item.id === productId
           ? { ...item, quantity: newQuantity }
