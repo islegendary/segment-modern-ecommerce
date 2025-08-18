@@ -21,12 +21,12 @@ const products = [
   { id: 'developer-api-module', name: 'Developer API Module', price: 19.99, category: 'Modules', description: 'Access to Titan\'s API for custom integrations (monthly subscription).', subscription: true, image: '/assets/ModuleDeveloper.png' },
 
   // Apparel
-  { 
-    id: 'pint-tshirt', 
-    name: 'Titan Pint T-Shirt', 
-    price: 24.99, 
-    category: 'Apparel', 
-    description: 'Show your love for Titan Pint with this comfortable tee.', 
+  {
+    id: 'pint-tshirt',
+    name: 'Titan Pint T-Shirt',
+    price: 24.99,
+    category: 'Apparel',
+    description: 'Show your love for Titan Pint with this comfortable tee.',
     image: '/assets/TitanTshirt.png',
     hasSizes: true,
     sizes: [
@@ -35,12 +35,12 @@ const products = [
       { id: 'XL', name: 'Power (XL)', price: 24.99 }
     ]
   },
-  { 
-    id: 'pint-hoodie', 
-    name: 'Titan Pint Hoodie', 
-    price: 49.99, 
-    category: 'Apparel', 
-    description: 'Stay warm and stylish with the Titan Pint hoodie.', 
+  {
+    id: 'pint-hoodie',
+    name: 'Titan Pint Hoodie',
+    price: 49.99,
+    category: 'Apparel',
+    description: 'Stay warm and stylish with the Titan Pint hoodie.',
     image: '/assets/TitanHoodie.png',
     hasSizes: true,
     sizes: [
@@ -49,12 +49,12 @@ const products = [
       { id: 'XL', name: 'Power (XL)', price: 49.99 }
     ]
   },
-  { 
-    id: 'power-cap', 
-    name: 'Titan Power Cap', 
-    price: 19.99, 
-    category: 'Apparel', 
-    description: 'Sport the Titan Power logo with this adjustable cap.', 
+  {
+    id: 'power-cap',
+    name: 'Titan Power Cap',
+    price: 19.99,
+    category: 'Apparel',
+    description: 'Sport the Titan Power logo with this adjustable cap.',
     image: '/assets/TitanCap.png',
     hasSizes: true,
     sizes: [
@@ -62,12 +62,12 @@ const products = [
       { id: 'NEURALINK', name: 'Neuralink (become 1 with Titan)', price: 9999.00 }
     ]
   },
-  { 
-    id: 'power-jacket', 
-    name: 'Titan Power Jacket', 
-    price: 79.99, 
-    category: 'Apparel', 
-    description: 'Premium jacket for the dedicated Titan Power enthusiast.', 
+  {
+    id: 'power-jacket',
+    name: 'Titan Power Jacket',
+    price: 79.99,
+    category: 'Apparel',
+    description: 'Premium jacket for the dedicated Titan Power enthusiast.',
     image: '/assets/TitanJacket.png',
     hasSizes: true,
     sizes: [
@@ -88,15 +88,15 @@ let lastTrackCalls = {}; // Store per-event-type tracking
 
 const trackPage = (pageName, properties = {}) => {
   const currentCall = `${pageName}-${JSON.stringify(properties)}`;
-  
+
   // Prevent duplicate page calls (pages should only be tracked once per unique page+properties combination)
   if (lastPageCall === currentCall) {
     console.log(`Duplicate page call prevented for: ${pageName}`);
     return;
   }
-  
+
   lastPageCall = currentCall;
-  
+
   if (window.analytics) {
     console.group(`📄 Segment Page Call: ${pageName}`);
     console.log('📊 Page Properties:', JSON.stringify(properties, null, 2));
@@ -108,7 +108,7 @@ const trackPage = (pageName, properties = {}) => {
 const trackEvent = (eventName, properties = {}, options = {}) => {
   const currentCall = `${eventName}-${JSON.stringify(properties)}-${JSON.stringify(options)}`;
   const currentTime = Date.now();
-  
+
   // Define which events should allow duplicates and their cooldown periods
   const eventSettings = {
     'Product Added': { allowDuplicates: true, cooldownMs: 500 }, // Allow adding same product multiple times, short cooldown for rapid clicks
@@ -118,16 +118,16 @@ const trackEvent = (eventName, properties = {}, options = {}) => {
     'Signed Up': { allowDuplicates: false, cooldownMs: 10000 }, // Prevent duplicate signups for 10 seconds
     'Form Submitted': { allowDuplicates: false, cooldownMs: 5000 }, // Prevent duplicate form submissions for 5 seconds
   };
-  
+
   const setting = eventSettings[eventName] || { allowDuplicates: true, cooldownMs: 1000 }; // Default: allow with 1s cooldown
-  
+
   // Initialize tracking for this event type if it doesn't exist
   if (!lastTrackCalls[eventName]) {
     lastTrackCalls[eventName] = { lastCall: null, lastTime: null };
   }
-  
+
   const lastEventData = lastTrackCalls[eventName];
-  
+
   // Check for rapid duplicates based on event-specific settings
   if (lastEventData.lastCall === currentCall && lastEventData.lastTime && (currentTime - lastEventData.lastTime) < setting.cooldownMs) {
     if (!setting.allowDuplicates) {
@@ -138,13 +138,13 @@ const trackEvent = (eventName, properties = {}, options = {}) => {
       return;
     }
   }
-  
+
   // Update tracking for this event type
   lastTrackCalls[eventName] = {
     lastCall: currentCall,
     lastTime: currentTime
   };
-  
+
   if (window.analytics) {
     console.group(`🎯 Segment Track Event: ${eventName}`);
     console.log('📊 Event Properties:', JSON.stringify(properties, null, 2));
@@ -332,7 +332,7 @@ const CategoryPage = ({ categoryName, navigateTo }) => {
       const prices = product.sizes.map(size => size.price);
       const minPrice = Math.min(...prices);
       const maxPrice = Math.max(...prices);
-      
+
       if (minPrice === maxPrice) {
         return `$${minPrice.toFixed(2)}`;
       } else {
@@ -401,7 +401,7 @@ const ProductPage = ({ productId, navigateTo, addToCart }) => {
         category: product.category,
         price: product.price,
       });
-      
+
       // Use centralized event tracking to prevent duplicates
       trackEvent('Product Viewed', {
         productId: product.id,
@@ -427,7 +427,7 @@ const ProductPage = ({ productId, navigateTo, addToCart }) => {
 
   const handleAddToCart = () => {
     let productToAdd = { ...product };
-    
+
     // If product has sizes, include the selected size info
     if (product.hasSizes && selectedSize) {
       productToAdd = {
@@ -440,7 +440,7 @@ const ProductPage = ({ productId, navigateTo, addToCart }) => {
     }
 
     addToCart(productToAdd);
-    
+
     // Use centralized event tracking to prevent duplicates
     trackEvent('Product Added', {
       productId: productToAdd.id,
@@ -450,7 +450,7 @@ const ProductPage = ({ productId, navigateTo, addToCart }) => {
       quantity: 1,
       ...(selectedSize && { size: selectedSize.name })
     });
-    
+
     setShowAddedToCartMessage(true);
     // Optionally hide the message after a few seconds
     setTimeout(() => setShowAddedToCartMessage(false), 5000);
@@ -493,11 +493,10 @@ const ProductPage = ({ productId, navigateTo, addToCart }) => {
                   <button
                     key={size.id}
                     onClick={() => setSelectedSize(size)}
-                    className={`p-3 rounded-xl border-2 transition-all duration-300 ${
-                      selectedSize?.id === size.id
-                        ? 'border-blue-600 bg-blue-50 text-blue-600'
-                        : 'border-gray-300 hover:border-blue-400 hover:bg-gray-50'
-                    } ${product.id === 'power-cap' && size.id === 'NEURALINK' ? 'bg-gradient-to-r from-purple-50 to-pink-50 border-purple-300 hover:border-purple-400' : ''}`}
+                    className={`p-3 rounded-xl border-2 transition-all duration-300 ${selectedSize?.id === size.id
+                      ? 'border-blue-600 bg-blue-50 text-blue-600'
+                      : 'border-gray-300 hover:border-blue-400 hover:bg-gray-50'
+                      } ${product.id === 'power-cap' && size.id === 'NEURALINK' ? 'bg-gradient-to-r from-purple-50 to-pink-50 border-purple-300 hover:border-purple-400' : ''}`}
                   >
                     <div className="font-semibold">{size.name}</div>
                     <div className={`text-sm ${size.id === 'NEURALINK' ? 'text-purple-600 font-bold' : 'text-gray-600'}`}>
@@ -521,11 +520,10 @@ const ProductPage = ({ productId, navigateTo, addToCart }) => {
             <button
               onClick={handleAddToCart}
               disabled={!canAddToCart}
-              className={`px-8 py-4 rounded-full text-xl font-semibold shadow-lg transform transition-all duration-300 flex items-center justify-center gap-3 mx-auto md:mx-0 ${
-                canAddToCart
-                  ? 'bg-blue-600 text-white hover:bg-blue-700 hover:scale-105'
-                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-              }`}
+              className={`px-8 py-4 rounded-full text-xl font-semibold shadow-lg transform transition-all duration-300 flex items-center justify-center gap-3 mx-auto md:mx-0 ${canAddToCart
+                ? 'bg-blue-600 text-white hover:bg-blue-700 hover:scale-105'
+                : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                }`}
             >
               <ShoppingCart size={24} /> Add to Cart
             </button>
@@ -580,13 +578,13 @@ const CartPage = ({ cart, updateCartQuantity, removeFromCart, navigateTo }) => {
 
   return (
     <div className="w-screen min-h-screen bg-white">
-      <h2 className="text-4xl font-bold text-gray-900 py-8 text-center">Your Shopping Cart</h2>
+      <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 py-6 sm:py-8 text-center px-4">Your Shopping Cart</h2>
       {cart.length === 0 ? (
-        <div className="text-center text-gray-600 text-xl py-10">
+        <div className="text-center text-gray-600 text-lg sm:text-xl py-10 px-4">
           <p className="mb-6">Your cart is empty.</p>
-          <button 
-            onClick={() => navigateTo('home')} 
-            className="bg-blue-600 text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg hover:bg-blue-700 transform hover:scale-105 transition-all duration-300"
+          <button
+            onClick={() => navigateTo('home')}
+            className="bg-blue-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-semibold shadow-lg hover:bg-blue-700 transform hover:scale-105 transition-all duration-300"
           >
             Start shopping!
           </button>
@@ -595,38 +593,39 @@ const CartPage = ({ cart, updateCartQuantity, removeFromCart, navigateTo }) => {
         <div className="w-full">
           <div className="divide-y divide-gray-200 px-4 sm:px-8">
             {cart.map(item => (
-              <div key={item.id} className="flex flex-col sm:flex-row sm:items-center sm:justify-between py-6 gap-4">
-                <div className="flex items-center gap-4">
+              <div key={item.id} className="flex flex-col sm:flex-row sm:items-center sm:justify-between py-4 sm:py-6 gap-3 sm:gap-4">
+                <div className="flex items-start sm:items-center gap-3 sm:gap-4 flex-1 min-w-0">
                   <img
                     src={item.image}
                     alt={item.name}
-                    className="w-20 h-20 sm:w-24 sm:h-24 object-cover rounded-lg shadow-md"
+                    className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 object-cover rounded-lg shadow-md flex-shrink-0"
                     onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/100x100/F0F9FF/000?text=Image'; }}
                   />
-                  <div>
-                    <h3 className="text-lg sm:text-xl font-semibold text-gray-800">{item.name}</h3>
-                    <p className="text-gray-600">${item.price.toFixed(2)}</p>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-base sm:text-lg md:text-xl font-semibold text-gray-800 leading-tight mb-1">{item.name}</h3>
+                    <p className="text-sm sm:text-base text-gray-600 font-medium">${item.price.toFixed(2)}</p>
+                    <p className="text-xs sm:text-sm text-gray-500 mt-1">Qty: {item.quantity}</p>
                   </div>
                 </div>
-                <div className="flex items-center justify-between sm:gap-4">
+                <div className="flex items-center justify-between sm:gap-4 w-full sm:w-auto">
                   <div className="flex items-center border border-gray-300 rounded-lg">
                     <button
                       onClick={() => updateCartQuantity(item.id, item.quantity - 1)}
-                      className="px-2 sm:px-3 py-1 text-base sm:text-lg font-bold text-gray-700 hover:bg-gray-100 rounded-l-lg"
+                      className="px-2 sm:px-3 py-1 text-sm sm:text-base font-bold text-gray-700 hover:bg-gray-100 rounded-l-lg transition-colors"
                       disabled={item.quantity <= 1}
                     >
                       -
                     </button>
-                    <span className="px-3 sm:px-4 py-1 text-base sm:text-lg font-medium">{item.quantity}</span>
+                    <span className="px-2 sm:px-3 py-1 text-sm sm:text-base font-medium min-w-[2rem] text-center">{item.quantity}</span>
                     <button
                       onClick={() => updateCartQuantity(item.id, item.quantity + 1)}
-                      className="px-2 sm:px-3 py-1 text-base sm:text-lg font-bold text-gray-700 hover:bg-gray-100 rounded-r-lg"
+                      className="px-2 sm:px-3 py-1 text-sm sm:text-base font-bold text-gray-700 hover:bg-gray-100 rounded-r-lg transition-colors"
                     >
                       +
                     </button>
                   </div>
-                  <div className="flex items-center gap-3 sm:gap-4">
-                    <p className="text-lg font-bold text-gray-800 min-w-fit">${(item.price * item.quantity).toFixed(2)}</p>
+                  <div className="flex items-center gap-2 sm:gap-3">
+                    <p className="text-base sm:text-lg font-bold text-gray-800 min-w-fit">${(item.price * item.quantity).toFixed(2)}</p>
                     <button
                       onClick={() => {
                         removeFromCart(item.id);
@@ -638,7 +637,7 @@ const CartPage = ({ cart, updateCartQuantity, removeFromCart, navigateTo }) => {
                           quantity: item.quantity,
                         });
                       }}
-                      className="bg-red-500 text-white px-3 sm:px-4 py-2 rounded-full hover:bg-red-600 transition-colors duration-300 text-xs sm:text-sm font-medium"
+                      className="bg-red-500 text-white px-2 sm:px-3 py-1 sm:py-2 rounded-full hover:bg-red-600 transition-colors duration-300 text-xs sm:text-sm font-medium"
                     >
                       Remove
                     </button>
@@ -647,13 +646,15 @@ const CartPage = ({ cart, updateCartQuantity, removeFromCart, navigateTo }) => {
               </div>
             ))}
           </div>
-          <div className="flex flex-col sm:flex-row sm:justify-end sm:items-center mt-8 pt-6 border-t border-gray-200 px-4 sm:px-8 pb-8 gap-4">
-            <p className="text-2xl sm:text-3xl font-bold text-gray-900 text-center sm:mr-6">Total: ${total.toFixed(2)}</p>
+          <div className="flex flex-col sm:flex-row sm:justify-end sm:items-center mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-gray-200 px-4 sm:px-8 pb-6 sm:pb-8 gap-4">
+            <div className="text-center sm:text-right sm:mr-6">
+              <p className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">Total: ${total.toFixed(2)}</p>
+            </div>
             <button
               onClick={() => navigateTo('checkout')}
-              className="bg-green-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-lg sm:text-xl font-semibold shadow-lg hover:bg-green-700 transform hover:scale-105 transition-all duration-300 w-full sm:w-auto"
+              className="bg-green-600 text-white px-4 sm:px-6 md:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg md:text-xl font-semibold shadow-lg hover:bg-green-700 transform hover:scale-105 transition-all duration-300 w-full sm:w-auto"
             >
-              Proceed to Checkout
+              Buy Now
             </button>
           </div>
         </div>
@@ -677,8 +678,8 @@ const CheckoutPage = ({ cart, navigateTo, completeOrder }) => {
       {cart.length === 0 ? (
         <div className="text-center text-gray-600 text-xl p-10 bg-white rounded-xl shadow-md">
           <p className="mb-6">Your cart is empty.</p>
-          <button 
-            onClick={() => navigateTo('home')} 
+          <button
+            onClick={() => navigateTo('home')}
             className="bg-blue-600 text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg hover:bg-blue-700 transform hover:scale-105 transition-all duration-300"
           >
             Start shopping!
@@ -734,7 +735,7 @@ const OrderConfirmationPage = ({ navigateTo, clearCart }) => {
   useEffect(() => {
     // Use centralized page tracking to prevent duplicates
     trackPage('Order Confirmation Page');
-    
+
     // Clear cart only if it hasn't been cleared yet in this component's lifecycle
     if (!hasClearedCart.current) {
       clearCart();
@@ -786,23 +787,23 @@ const SignupForm = ({ navigateTo }) => {
       console.groupEnd();
       window.analytics.identify(userId, traits);
     }
-    
+
     const signUpProperties = {
       source: 'Signup Form',
       ...traits // Include email/phone in the event properties or remove and just use traits in context
     };
-    
+
     // Use centralized event tracking to prevent duplicates
     // Pass traits in context for additional user information
-    trackEvent('Signed Up', signUpProperties, { 
-      context: { 
-        traits: traits 
-      } 
+    trackEvent('Signed Up', signUpProperties, {
+      context: {
+        traits: traits
+      }
     });
 
-    console.log('Sign Up Event Triggered:', { 
-      properties: signUpProperties, 
-      context: { traits: traits } 
+    console.log('Sign Up Event Triggered:', {
+      properties: signUpProperties,
+      context: { traits: traits }
     });
 
     setMessage('Thank you for signing up! Check your console for Segment identify and track calls.');
@@ -915,7 +916,7 @@ const CustomFormPage = ({ navigateTo }) => {
       ]
     },
     {
-      id: 'customization2', 
+      id: 'customization2',
       label: 'Mobility & Navigation',
       options: [
         { text: 'Stationary Desktop Unit', score: 2 },
@@ -963,7 +964,7 @@ const CustomFormPage = ({ navigateTo }) => {
   const timeframeOptions = [
     { text: 'Ready Today', score: 10 },
     { text: 'Within 2 weeks', score: 8 },
-    { text: 'Within 1 Month', score: 6 }, 
+    { text: 'Within 1 Month', score: 6 },
     { text: 'Within 1 Year', score: 2 }
   ];
 
@@ -976,7 +977,7 @@ const CustomFormPage = ({ navigateTo }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     // Calculate scores for each customization option
     const getOptionScore = (optionId, selectedText) => {
       const optionGroup = customizationOptions.find(opt => opt.id === optionId);
@@ -1004,7 +1005,7 @@ const CustomFormPage = ({ navigateTo }) => {
 
     // Calculate total complexity score
     const totalComplexityScore = Object.values(scores).reduce((sum, score) => sum + score, 0);
-    
+
     // Track form submission
     trackEvent('Form Submitted', {
       formType: 'Custom Robot Configuration',
@@ -1018,10 +1019,10 @@ const CustomFormPage = ({ navigateTo }) => {
       // Internal scoring (not visible to customer)
       complexityScores: scores,
       totalComplexityScore: totalComplexityScore,
-      complexityLevel: totalComplexityScore >= 40 ? 'Very High' : 
-                      totalComplexityScore >= 30 ? 'High' : 
-                      totalComplexityScore >= 20 ? 'Medium' : 
-                      totalComplexityScore >= 10 ? 'Low' : 'Very Low',
+      complexityLevel: totalComplexityScore >= 40 ? 'Very High' :
+        totalComplexityScore >= 30 ? 'High' :
+          totalComplexityScore >= 20 ? 'Medium' :
+            totalComplexityScore >= 10 ? 'Low' : 'Very Low',
       timeframe: formData.timeframe,
       capabilities: formData.capabilities,
       referralCode: formData.referralCode,
@@ -1075,7 +1076,7 @@ const CustomFormPage = ({ navigateTo }) => {
         <p className="text-lg text-gray-600 mb-8 text-center">
           Tell us about your ideal robot companion and we'll build it specifically for you.
         </p>
-        
+
         <form onSubmit={handleSubmit} className="space-y-8">
           {/* Customization Options */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -1098,8 +1099,8 @@ const CustomFormPage = ({ navigateTo }) => {
                 >
                   <option value="">Select {option.label}</option>
                   {option.options.map((opt, index) => (
-                    <option 
-                      key={index} 
+                    <option
+                      key={index}
                       value={opt.text}
                       style={{
                         color: '#111827',
@@ -1127,11 +1128,10 @@ const CustomFormPage = ({ navigateTo }) => {
                   key={timeframe.text}
                   type="button"
                   onClick={() => handleInputChange('timeframe', timeframe.text)}
-                  className={`p-3 rounded-xl border-2 transition-all duration-300 ${
-                    formData.timeframe === timeframe.text
-                      ? 'border-blue-600 bg-blue-50 text-blue-600'
-                      : 'border-gray-300 hover:border-blue-400 hover:bg-gray-50'
-                  }`}
+                  className={`p-3 rounded-xl border-2 transition-all duration-300 ${formData.timeframe === timeframe.text
+                    ? 'border-blue-600 bg-blue-50 text-blue-600'
+                    : 'border-gray-300 hover:border-blue-400 hover:bg-gray-50'
+                    }`}
                 >
                   {timeframe.text}
                 </button>
@@ -1270,7 +1270,7 @@ const CustomFormPage = ({ navigateTo }) => {
                 }}
                 required
               >
-                <option 
+                <option
                   value="US"
                   style={{
                     color: '#111827',
@@ -1281,7 +1281,7 @@ const CustomFormPage = ({ navigateTo }) => {
                 >
                   United States
                 </option>
-                <option 
+                <option
                   value="OTHER"
                   style={{
                     color: '#111827',
