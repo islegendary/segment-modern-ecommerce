@@ -673,51 +673,53 @@ const CheckoutPage = ({ cart, navigateTo, completeOrder }) => {
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   return (
-    <div className="p-6">
-      <h2 className="text-4xl font-bold text-gray-900 mb-8 text-center">Confirm Your Order</h2>
+    <div className="p-4 sm:p-6">
+      <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-6 sm:mb-8 text-center px-4">Confirm Your Order</h2>
       {cart.length === 0 ? (
-        <div className="text-center text-gray-600 text-xl p-10 bg-white rounded-xl shadow-md">
+        <div className="text-center text-gray-600 text-lg sm:text-xl p-6 sm:p-10 bg-white rounded-xl shadow-md mx-4">
           <p className="mb-6">Your cart is empty.</p>
           <button
             onClick={() => navigateTo('home')}
-            className="bg-blue-600 text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg hover:bg-blue-700 transform hover:scale-105 transition-all duration-300"
+            className="bg-blue-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-semibold shadow-lg hover:bg-blue-700 transform hover:scale-105 transition-all duration-300"
           >
             Start shopping!
           </button>
         </div>
       ) : (
-        <div className="bg-white rounded-3xl shadow-xl p-8 w-full mx-auto">
-          <div className="divide-y divide-gray-200 mb-6">
+        <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl p-4 sm:p-6 md:p-8 w-full mx-auto max-w-4xl">
+          <div className="divide-y divide-gray-200 mb-4 sm:mb-6">
             {cart.map(item => (
-              <div key={item.id} className="flex items-center justify-between py-4">
-                <div className="flex items-center gap-4">
+              <div key={item.id} className="flex flex-col sm:flex-row sm:items-center sm:justify-between py-3 sm:py-4 gap-2 sm:gap-4">
+                <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
                   <img
                     src={item.image}
                     alt={item.name}
-                    className="w-16 h-16 object-cover rounded-md shadow-sm"
+                    className="w-12 h-12 sm:w-16 sm:h-16 object-cover rounded-md shadow-sm flex-shrink-0"
                     onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/80x80/F0F9FF/000?text=Image'; }}
                   />
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-800">{item.name}</h3>
-                    <p className="text-gray-600 text-sm">Qty: {item.quantity}</p>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="text-sm sm:text-base md:text-lg font-semibold text-gray-800 leading-tight mb-1">{item.name}</h3>
+                    <p className="text-xs sm:text-sm text-gray-600">Qty: {item.quantity}</p>
                   </div>
                 </div>
-                <p className="text-lg font-bold text-gray-800">${(item.price * item.quantity).toFixed(2)}</p>
+                <p className="text-base sm:text-lg font-bold text-gray-800 text-right sm:text-left">${(item.price * item.quantity).toFixed(2)}</p>
               </div>
             ))}
           </div>
-          <div className="flex justify-end items-center mt-8 pt-6 border-t border-gray-200">
-            <p className="text-3xl font-bold text-gray-900 mr-6">Total: ${total.toFixed(2)}</p>
+          <div className="flex flex-col sm:flex-row sm:justify-end sm:items-center mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-gray-200 gap-4">
+            <div className="text-center sm:text-right sm:mr-6">
+              <p className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900">Total: ${total.toFixed(2)}</p>
+            </div>
             <button
               onClick={() => completeOrder(cart, total)} // Call completeOrder function
-              className="bg-blue-600 text-white px-8 py-4 rounded-full text-xl font-semibold shadow-lg hover:bg-blue-700 transform hover:scale-105 transition-all duration-300"
+              className="bg-blue-600 text-white px-4 sm:px-6 md:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg md:text-xl font-semibold shadow-lg hover:bg-blue-700 transform hover:scale-105 transition-all duration-300 w-full sm:w-auto"
             >
               Buy Now
             </button>
           </div>
           <button
             onClick={() => navigateTo('cart')}
-            className="mt-4 bg-gray-200 text-gray-800 px-6 py-3 rounded-full text-lg font-medium hover:bg-gray-300 transition-colors duration-300 block mx-auto"
+            className="mt-4 sm:mt-6 bg-gray-200 text-gray-800 px-4 sm:px-6 py-2 sm:py-3 rounded-full text-sm sm:text-base md:text-lg font-medium hover:bg-gray-300 transition-colors duration-300 block mx-auto"
           >
             Back to Cart
           </button>
@@ -748,13 +750,13 @@ const OrderConfirmationPage = ({ navigateTo, clearCart }) => {
   };
 
   return (
-    <div className="p-6">
-      <div className="text-center bg-white rounded-xl shadow-md p-10">
-        <h3 className="text-3xl font-bold text-green-700 mb-4">Titan thanks you for your order!</h3>
-        <p className="text-lg text-gray-700 mb-6">Your order has been successfully placed.</p>
+    <div className="p-4 sm:p-6">
+      <div className="text-center bg-white rounded-xl shadow-md p-6 sm:p-8 md:p-10 mx-4">
+        <h3 className="text-2xl sm:text-3xl font-bold text-green-700 mb-3 sm:mb-4">Titan thanks you for your order!</h3>
+        <p className="text-base sm:text-lg text-gray-700 mb-4 sm:mb-6">Your order has been successfully placed.</p>
         <button
           onClick={handleRefreshDemo}
-          className="bg-blue-600 text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg hover:bg-blue-700 transform hover:scale-105 transition-all duration-300"
+          className="bg-blue-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-semibold shadow-lg hover:bg-blue-700 transform hover:scale-105 transition-all duration-300"
         >
           Click here to refresh demo
         </button>
@@ -812,23 +814,23 @@ const SignupForm = ({ navigateTo }) => {
   };
 
   return (
-    <div className="p-6">
-      <div className="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-3xl shadow-xl p-8 md:p-12 w-full mx-auto">
-        <h2 className="text-4xl font-bold text-gray-900 mb-6 text-center">Sign Up for Exclusive Offers</h2>
-        <p className="text-lg text-gray-700 mb-8 text-center">
+    <div className="p-4 sm:p-6">
+      <div className="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-2xl sm:rounded-3xl shadow-xl p-4 sm:p-6 md:p-8 lg:p-12 w-full mx-auto max-w-6xl">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4 sm:mb-6 text-center px-4">Sign Up for Exclusive Offers</h2>
+        <p className="text-base sm:text-lg text-gray-700 mb-6 sm:mb-8 text-center px-4">
           Get the latest news, updates, and special discounts on Titan robots and accessories delivered straight to your inbox or phone!
         </p>
-        <div className="flex flex-col lg:flex-row items-center gap-8">
-          <div className="lg:w-1/2">
-            <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="flex flex-col lg:flex-row items-center gap-6 sm:gap-8">
+          <div className="w-full lg:w-1/2">
+            <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
               <div>
-                <label htmlFor="email" className="block text-left text-gray-700 text-lg font-medium mb-2">Email Address</label>
+                <label htmlFor="email" className="block text-left text-gray-700 text-base sm:text-lg font-medium mb-2">Email Address</label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
                   <input
                     type="email"
                     id="email"
-                    className="w-full p-3 pl-10 border border-gray-300 rounded-xl focus:ring-blue-500 focus:border-blue-500 text-lg"
+                    className="w-full p-3 pl-10 border border-gray-300 rounded-xl focus:ring-blue-500 focus:border-blue-500 text-base sm:text-lg"
                     placeholder="your.email@example.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -836,13 +838,13 @@ const SignupForm = ({ navigateTo }) => {
                 </div>
               </div>
               <div>
-                <label htmlFor="phone" className="block text-left text-gray-700 text-lg font-medium mb-2">Phone Number (for SMS)</label>
+                <label htmlFor="phone" className="block text-left text-gray-700 text-base sm:text-lg font-medium mb-2">Phone Number (for SMS)</label>
                 <div className="relative">
-                  <BellRing className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+                  <BellRing className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
                   <input
                     type="tel"
                     id="phone"
-                    className="w-full p-3 pl-10 border border-gray-300 rounded-xl focus:ring-blue-500 focus:border-blue-500 text-lg"
+                    className="w-full p-3 pl-10 border border-gray-300 rounded-xl focus:ring-blue-500 focus:border-blue-500 text-base sm:text-lg"
                     placeholder="(123) 456-7890"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
@@ -851,26 +853,26 @@ const SignupForm = ({ navigateTo }) => {
               </div>
               <button
                 type="submit"
-                className="w-full bg-blue-600 text-white px-6 py-3 rounded-full text-xl font-semibold shadow-lg hover:bg-blue-700 transform hover:scale-105 transition-all duration-300"
+                className="w-full bg-blue-600 text-white px-4 sm:px-6 py-3 rounded-full text-base sm:text-lg md:text-xl font-semibold shadow-lg hover:bg-blue-700 transform hover:scale-105 transition-all duration-300"
               >
                 Subscribe
               </button>
             </form>
             {message && (
-              <p className="mt-6 text-green-700 font-semibold text-lg">{message}</p>
+              <p className="mt-4 sm:mt-6 text-green-700 font-semibold text-base sm:text-lg">{message}</p>
             )}
             <button
               onClick={() => navigateTo('home')}
-              className="mt-8 bg-gray-200 text-gray-800 px-6 py-3 rounded-full text-lg font-medium hover:bg-gray-300 transition-colors duration-300"
+              className="mt-6 sm:mt-8 bg-gray-200 text-gray-800 px-4 sm:px-6 py-2 sm:py-3 rounded-full text-sm sm:text-base md:text-lg font-medium hover:bg-gray-300 transition-colors duration-300"
             >
               Back to Home
             </button>
           </div>
-          <div className="lg:w-1/2 flex justify-center">
+          <div className="w-full lg:w-1/2 flex justify-center">
             <img
               src="/assets/TitanOffer.png"
               alt="Titan Robot Special Offer"
-              className="rounded-2xl shadow-2xl max-w-full h-auto"
+              className="rounded-xl sm:rounded-2xl shadow-2xl max-w-full h-auto"
               onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/500x400/D1E9FF/000?text=Titan+Offer'; }}
             />
           </div>
@@ -1042,24 +1044,24 @@ const CustomFormPage = ({ navigateTo }) => {
 
   if (isSubmitted) {
     return (
-      <div className="p-6">
-        <div className="bg-white rounded-3xl shadow-xl p-8 max-w-2xl mx-auto text-center">
-          <div className="mb-6">
-            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className="p-4 sm:p-6">
+        <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl p-4 sm:p-6 md:p-8 max-w-2xl mx-auto text-center">
+          <div className="mb-4 sm:mb-6">
+            <div className="w-12 h-12 sm:w-16 sm:h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+              <svg className="w-6 h-6 sm:w-8 sm:h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Thank You!</h2>
-            <p className="text-lg text-gray-700 mb-6">
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">Thank You!</h2>
+            <p className="text-base sm:text-lg text-gray-700 mb-4 sm:mb-6">
               Your custom robot configuration has been submitted. Our engineering team will review your requirements and contact you with a detailed proposal and timeline.
             </p>
-            <p className="text-sm text-gray-600 mb-8">
+            <p className="text-xs sm:text-sm text-gray-600 mb-6 sm:mb-8">
               We'll be in touch within 1-2 business days to discuss your custom Titan robot.
             </p>
             <button
               onClick={() => navigateTo('home')}
-              className="bg-blue-600 text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg hover:bg-blue-700 transform hover:scale-105 transition-all duration-300"
+              className="bg-blue-600 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-full text-base sm:text-lg font-semibold shadow-lg hover:bg-blue-700 transform hover:scale-105 transition-all duration-300"
             >
               Back to Home
             </button>
@@ -1070,19 +1072,19 @@ const CustomFormPage = ({ navigateTo }) => {
   }
 
   return (
-    <div className="p-6">
-      <div className="bg-white rounded-3xl shadow-xl p-8 max-w-4xl mx-auto">
-        <h2 className="text-4xl font-bold text-gray-900 mb-2 text-center">Configure Your Custom Titan Robot</h2>
-        <p className="text-lg text-gray-600 mb-8 text-center">
+    <div className="p-4 sm:p-6">
+      <div className="bg-white rounded-2xl sm:rounded-3xl shadow-xl p-4 sm:p-6 md:p-8 max-w-4xl mx-auto">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2 text-center px-4">Configure Your Custom Titan Robot</h2>
+        <p className="text-base sm:text-lg text-gray-600 mb-6 sm:mb-8 text-center px-4">
           Tell us about your ideal robot companion and we'll build it specifically for you.
         </p>
 
-        <form onSubmit={handleSubmit} className="space-y-8">
+        <form onSubmit={handleSubmit} className="space-y-6 sm:space-y-8">
           {/* Customization Options */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
             {customizationOptions.map((option) => (
-              <div key={option.id} className="space-y-3">
-                <label className="block text-lg font-semibold text-gray-800">
+              <div key={option.id} className="space-y-2 sm:space-y-3">
+                <label className="block text-base sm:text-lg font-semibold text-gray-800">
                   {option.label}
                 </label>
                 <select
@@ -1119,16 +1121,16 @@ const CustomFormPage = ({ navigateTo }) => {
 
           {/* Timeframe */}
           <div>
-            <label className="block text-lg font-semibold text-gray-800 mb-3">
+            <label className="block text-base sm:text-lg font-semibold text-gray-800 mb-2 sm:mb-3">
               When do you need this completed?
             </label>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3">
               {timeframeOptions.map((timeframe) => (
                 <button
                   key={timeframe.text}
                   type="button"
                   onClick={() => handleInputChange('timeframe', timeframe.text)}
-                  className={`p-3 rounded-xl border-2 transition-all duration-300 ${formData.timeframe === timeframe.text
+                  className={`p-2 sm:p-3 rounded-xl border-2 transition-all duration-300 text-sm sm:text-base ${formData.timeframe === timeframe.text
                     ? 'border-blue-600 bg-blue-50 text-blue-600'
                     : 'border-gray-300 hover:border-blue-400 hover:bg-gray-50'
                     }`}
@@ -1141,10 +1143,10 @@ const CustomFormPage = ({ navigateTo }) => {
 
           {/* Capabilities Description */}
           <div>
-            <label htmlFor="capabilities" className="block text-lg font-semibold text-gray-800 mb-3">
+            <label htmlFor="capabilities" className="block text-base sm:text-lg font-semibold text-gray-800 mb-2 sm:mb-3">
               Describe Capabilities
             </label>
-            <p className="text-sm text-gray-600 mb-3">
+            <p className="text-xs sm:text-sm text-gray-600 mb-2 sm:mb-3">
               Providing details here helps us with an estimate
             </p>
             <textarea
