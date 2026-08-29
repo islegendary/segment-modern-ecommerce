@@ -13,9 +13,9 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/React-19.1.0-blue">
-  <img src="https://img.shields.io/badge/Vite-7.0.6-green">
-  <img src="https://img.shields.io/badge/Tailwind-3.4.17-blueviolet">
+  <img src="https://img.shields.io/badge/React-19.2.8-blue">
+  <img src="https://img.shields.io/badge/Vite-8.2.2-green">
+  <img src="https://img.shields.io/badge/Tailwind-4.3.3-blueviolet">
   <img src="https://img.shields.io/badge/license-MIT-green">
 </p>
 
@@ -66,17 +66,18 @@ Experience the full Titan AI Robotics e-commerce platform with all features incl
 
 | Technology | Version | Purpose |
 |------------|---------|---------|
-| **React** | 19.1.0 | Frontend framework |
-| **Vite** | 7.0.6 | Build tool and dev server |
-| **Tailwind CSS** | 3.4.17 | Utility-first CSS framework |
-| **Lucide React** | 0.525.0 | Icon library |
-| **ESLint** | 9.30.1 | Code linting |
+| **React** | 19.2.8 | Frontend framework |
+| **Vite** | 8.2.2 | Build tool and dev server |
+| **Tailwind CSS** | 4.3.3 | Utility-first CSS framework |
+| **Lucide React** | 1.37.0 | Icon library |
+| **@segment/analytics-next** | 1.84.1 | Segment browser SDK |
+| **ESLint** | 10.9.1 | Code linting |
 
 ## 📦 Installation
 
 ### Prerequisites
-- Node.js 18.0.0 or higher
-- npm 9.0.0 or higher
+- Node.js 20.0.0 or higher
+- npm 10.0.0 or higher
 
 ### Quick Start
 
@@ -100,7 +101,7 @@ Experience the full Titan AI Robotics e-commerce platform with all features incl
    ```
    http://localhost:5173
    ```
-   *Note Uncaught (in promise) Error: A listener indicated an asynchronous response errors, Failed to load resource:, and net::ERR_BLOCKED_BY_CLIENT in console can be ignored and will resolve when you add your Segment writeKey.  Without your writeKey you can view the simulated events using console.
+   Every `page`, `track`, and `identify` call is always logged in the console. Add a write key (below) when you also want those same calls sent to Segment.
 
 ## 🏗️ Build Commands
 
@@ -152,21 +153,18 @@ npm run lint
 
 ### Segment Analytics Setup
 
-To enable analytics tracking with your own Segment workspace, simply update the write key constant at **line 77** in `src/App.jsx`:
+Every event is always logged in the browser console. Paste a real write key to also send those same events with `@segment/analytics-next`. Leave the placeholder and nothing is sent.
+
+Update the write key in `src/analytics.js`, or set `VITE_SEGMENT_WRITE_KEY` in a `.env` file:
 
 ```javascript
-const writeKey = "YOUR_SEGMENT_WRITE_KEY_HERE"; // Replace with your actual Segment write key
+const WRITE_KEY = String(
+  import.meta.env.VITE_SEGMENT_WRITE_KEY || 'YOUR_SEGMENT_WRITE_KEY_HERE'
+).trim();
 ```
-
-The application comes with Segment integration already configured - you only need to replace the placeholder write key with your actual key from your Segment workspace.
-
-### Environment Variables
-
-Create a `.env` file for environment-specific configuration:
 
 ```env
 VITE_SEGMENT_WRITE_KEY=your_segment_write_key
-VITE_API_URL=your_api_endpoint
 ```
 
 ## 📂 Project Structure
@@ -181,14 +179,18 @@ segment-modern-ecommerce/
 │   │   └── ...                     # All product images
 │   └── vite.svg
 ├── src/
-│   ├── App.jsx                     # Main application component
-│   ├── App.css                     # Custom styles (minimal)
-│   ├── index.css                   # Global styles + Tailwind
+│   ├── analytics.js                # Segment SDK (console always, send if write key)
+│   ├── App.jsx                     # Cart state and page switching
+│   ├── components/                 # Header and shared image helper
+│   ├── data/                       # Catalog and custom-form options
+│   ├── pages/                      # Storefront screens
+│   ├── lib/                        # Price and cart helpers
+│   ├── index.css                   # Tailwind v4 + form styles
 │   └── main.jsx                    # Application entry point
 ├── index.html                      # HTML template
 ├── package.json                    # Dependencies and scripts
-├── tailwind.config.js              # Tailwind configuration
-├── vite.config.js                  # Vite configuration
+├── vite.config.js                  # Vite + Tailwind configuration
+├── .env.example                    # Optional write key
 └── README.md
 ```
 
@@ -283,8 +285,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙏 Acknowledgments
 
-- [React](https://reactjs.org/) for the frontend framework
-- [Vite](https://vitejs.dev/) for the blazing fast build tool
+- [React](https://react.dev/) for the frontend framework
+- [Vite](https://vite.dev/) for the blazing fast build tool
 - [Tailwind CSS](https://tailwindcss.com/) for the utility-first CSS framework
 - [Lucide](https://lucide.dev/) for the beautiful icons
 - [Segment](https://segment.com/) for analytics infrastructure

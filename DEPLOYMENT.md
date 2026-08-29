@@ -23,7 +23,7 @@
 - [x] Segment analytics integration ready
 
 ### ✅ Performance
-- [x] Build size optimized (219KB gzipped)
+- [x] Production build successful
 - [x] Images properly optimized
 - [x] No console errors in production build
 - [x] Fast loading times
@@ -53,10 +53,13 @@ git push origin main
 
 ## Environment Variables
 
-If using your own Segment write key:
+Leave unset to log events in the console only. Set a real key to keep that console output and also send events:
+
 ```
 VITE_SEGMENT_WRITE_KEY=your_actual_write_key_here
 ```
+
+You can also paste the key in `src/analytics.js` for a live demo.
 
 ## Troubleshooting
 
